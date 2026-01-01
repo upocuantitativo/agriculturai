@@ -11,12 +11,12 @@ export const SUPABASE_CONFIG = {
     // URL de tu proyecto Supabase
     // Formato: https://[proyecto-id].supabase.co
     // Obtener en: Project Settings > API > Project URL
-    url: 'https://xxxxxxxxxx.supabase.co',
+    url: 'https://hfqcjzadsbpmocgsqpmy.supabase.co',
 
     // Anon (public) key de tu proyecto
     // Es segura para usar en el frontend
     // Obtener en: Project Settings > API > Project API keys > anon public
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    anonKey: 'sb_publishable_A1iDMGieankyeFYkWs6LYA_AhAwcj7K',
 
     // Configuración opcional
     options: {
