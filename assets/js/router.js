@@ -43,9 +43,20 @@ class Router {
     }
 
     navigate(url) {
+        // Construir URL completa con basePath
+        let fullUrl = url;
+        if (this.basePath !== '/' && !url.startsWith(this.basePath)) {
+            // Si la URL es relativa (ej: /diagnosis), agregar basePath
+            if (url.startsWith('/')) {
+                fullUrl = this.basePath + url.substring(1);
+            } else {
+                fullUrl = this.basePath + url;
+            }
+        }
+
         if (this.currentPath === url) return;
 
-        window.history.pushState(null, null, url);
+        window.history.pushState(null, null, fullUrl);
         this.loadRoute();
     }
 
