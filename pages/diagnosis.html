@@ -125,44 +125,37 @@ window.initDiagnosis = function() {
     let selectedImage = null;
 
     // Manejar selección de imagen (cámara o archivo)
-    const handleImageSelect = async (e) => {
+    const handleImageSelect = (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         // Validar tipo de archivo
         if (!file.type.match('image.*')) {
-            window.utils.showToast('Por favor selecciona una imagen válida', 'danger');
+            alert('Por favor selecciona una imagen válida (JPG o PNG)');
             return;
         }
 
-        // Validar tamaño (5MB)
-        if (file.size > 5 * 1024 * 1024) {
-            window.utils.showToast('La imagen es muy grande. Tamaño máximo: 5MB', 'warning');
+        // Validar tamaño (10MB - más permisivo)
+        if (file.size > 10 * 1024 * 1024) {
+            alert('La imagen es muy grande. Tamaño máximo: 10MB');
             return;
         }
 
-        try {
-            window.utils.showLoading();
+        // Guardar archivo original
+        selectedImage = file;
 
-            // Comprimir imagen si es muy grande
-            selectedImage = await window.utils.compressImage(file, 800, 800, 0.9);
-
-            // Mostrar preview
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                previewImage.src = e.target.result;
-                uploadArea.style.display = 'none';
-                previewArea.style.display = 'block';
-                resultsArea.style.display = 'none';
-            };
-            reader.readAsDataURL(selectedImage);
-
-            window.utils.hideLoading();
-        } catch (error) {
-            console.error('Error procesando imagen:', error);
-            window.utils.showToast('Error al procesar la imagen', 'danger');
-            window.utils.hideLoading();
-        }
+        // Mostrar preview inmediatamente
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            uploadArea.style.display = 'none';
+            previewArea.style.display = 'block';
+            resultsArea.style.display = 'none';
+        };
+        reader.onerror = () => {
+            alert('Error al leer la imagen. Intenta con otra imagen.');
+        };
+        reader.readAsDataURL(file);
     };
 
     cameraInput.addEventListener('change', handleImageSelect);
@@ -180,20 +173,19 @@ window.initDiagnosis = function() {
     });
 
     // Analizar imagen
-    analyzeBtn.addEventListener('click', async () => {
+    analyzeBtn.addEventListener('click', () => {
         if (!selectedImage) {
-            window.utils.showToast('No hay imagen para analizar', 'warning');
+            alert('No hay imagen para analizar');
             return;
         }
 
-        try {
-            window.utils.showLoading();
+        // Mostrar loading
+        analyzeBtn.disabled = true;
+        analyzeBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analizando...';
 
-            // TODO: Aquí se integrará el modelo de TensorFlow.js
-            // Por ahora, simulamos resultados de ejemplo
-
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Simular procesamiento
-
+        // Simular análisis (2 segundos)
+        setTimeout(() => {
+            // Resultados de ejemplo (simulados)
             const mockResults = [
                 {
                     disease: 'Tizón tardío (Phytophthora infestans)',
@@ -220,26 +212,14 @@ window.initDiagnosis = function() {
 
             displayResults(mockResults);
 
-            // Guardar en historial
-            const diagnosis = {
-                id: window.utils.generateId(),
-                timestamp: new Date().toISOString(),
-                results: mockResults,
-                imageData: previewImage.src.substring(0, 100) + '...' // Guardar miniatura
-            };
-            window.utils.storage.set('lastDiagnosis', diagnosis);
-
             previewArea.style.display = 'none';
             resultsArea.style.display = 'block';
 
-            window.utils.hideLoading();
-            window.utils.showToast('Análisis completado exitosamente', 'success');
+            // Restaurar botón
+            analyzeBtn.disabled = false;
+            analyzeBtn.innerHTML = '<i class="bi bi-cpu me-2"></i>Analizar Planta';
 
-        } catch (error) {
-            console.error('Error analizando imagen:', error);
-            window.utils.showToast('Error al analizar la imagen', 'danger');
-            window.utils.hideLoading();
-        }
+        }, 2000);
     });
 
     // Mostrar resultados
