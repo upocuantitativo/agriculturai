@@ -67,31 +67,112 @@ window.initChat = function() {
             return null;
         }
 
-        // Generar respuesta
-        function generateResponse(message) {
+        // Generar respuesta con IA
+        async function generateResponse(message) {
             const intent = detectIntent(message);
 
+            // Si hay un intent específico, usar la respuesta predefinida
             if (intent) {
-                // Seleccionar respuesta aleatoria del intent
                 const responses = intent.responses;
                 const randomResponse = responses[Math.floor(Math.random() * responses.length)];
                 return randomResponse;
             }
 
-            // Respuesta por defecto si no se encuentra intent
-            return `No tengo información específica sobre eso. Puedo ayudarte con:
+            // Si no hay intent, usar IA para generar respuesta
+            return await generateAIResponse(message);
+        }
 
-• Enfermedades de plantas (tizón, mildiu, oídio)
-• Fertilización (NPK, nutrientes, aplicación)
-• Riego (frecuencia, cantidad)
-• Control de plagas (pulgones, mosca blanca, ácaros)
-• Cultivos específicos (tomate, papa, maíz, etc.)
+        // Generar respuesta usando IA (Hugging Face o modelo local)
+        async function generateAIResponse(message) {
+            try {
+                // Intentar usar Hugging Face Inference API (gratuita)
+                const response = await fetch('https://api-inference.huggingface.co/models/google/flan-t5-large', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // API pública sin key requerida para modelos públicos
+                    },
+                    body: JSON.stringify({
+                        inputs: `Eres un asistente agrícola experto. Responde en español de forma clara y concisa.
 
-¿Sobre qué te gustaría saber más?`;
+Pregunta del agricultor: ${message}
+
+Respuesta profesional:`,
+                        parameters: {
+                            max_length: 300,
+                            temperature: 0.7,
+                            top_p: 0.9
+                        }
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && data[0] && data[0].generated_text) {
+                        return data[0].generated_text;
+                    }
+                }
+
+                // Si falla la API, usar respuesta de fallback mejorada
+                return generateSmartFallback(message);
+
+            } catch (error) {
+                console.error('Error generando respuesta con IA:', error);
+                return generateSmartFallback(message);
+            }
+        }
+
+        // Generar respuesta de fallback inteligente
+        function generateSmartFallback(message) {
+            const messageLower = message.toLowerCase();
+
+            // Intentar dar una respuesta útil basada en palabras clave
+            if (messageLower.includes('fertilizante') || messageLower.includes('abono')) {
+                return `Para consultas sobre fertilización, te recomiendo:
+
+1. Identificar la etapa del cultivo (crecimiento, floración, fructificación)
+2. Análisis de suelo si es posible
+3. NPK balanceado 15-15-15 para crecimiento general
+4. Mayor fósforo (P) para floración
+
+¿Sobre qué cultivo específico necesitas información?`;
+            }
+
+            if (messageLower.includes('enfermedad') || messageLower.includes('hongo') || messageLower.includes('plaga')) {
+                return `Para diagnóstico de enfermedades:
+
+1. Usa nuestra función de **Diagnóstico Visual** con foto
+2. Observa síntomas: manchas, decoloración, marchitez
+3. Verifica humedad y ventilación
+
+¿Puedes describir los síntomas que observas?`;
+            }
+
+            if (messageLower.includes('riego') || messageLower.includes('agua')) {
+                return `El riego adecuado depende de varios factores:
+
+• **Clima**: Mayor frecuencia en verano
+• **Tipo de cultivo**: Raíces profundas vs superficiales
+• **Suelo**: Arenoso drena rápido, arcilloso retiene
+• **Etapa**: Más agua en floración/fructificación
+
+¿Qué cultivo tienes y en qué clima estás?`;
+            }
+
+            // Respuesta general
+            return `Puedo ayudarte con información agrícola sobre:
+
+• 🌱 Diagnóstico de enfermedades (usa Diagnóstico Visual con foto)
+• 💧 Riego y nutrición
+• 🐛 Control de plagas
+• 🌾 Información específica de cultivos
+• 🧪 Fertilizantes y productos
+
+Por favor, hazme una pregunta más específica o usa nuestras herramientas especializadas.`;
         }
 
         // Procesar mensaje del usuario
-        function processUserMessage(message) {
+        async function processUserMessage(message) {
             if (!message.trim()) return;
 
             console.log('Mensaje del usuario:', message);
@@ -105,6 +186,9 @@ window.initChat = function() {
                 message: message,
                 timestamp: new Date().toISOString()
             });
+
+            // Limpiar input
+            chatInput.value = '';
 
             // Simular "escribiendo..."
             const typingDiv = document.createElement('div');
@@ -120,13 +204,14 @@ window.initChat = function() {
             chatMessages.appendChild(typingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Generar respuesta después de un delay
-            setTimeout(() => {
+            // Generar respuesta (ahora es async)
+            try {
+                const response = await generateResponse(message);
+
                 // Remover indicador de escritura
                 typingDiv.remove();
 
-                // Generar y mostrar respuesta
-                const response = generateResponse(message);
+                // Mostrar respuesta
                 addMessage(response, false);
 
                 // Guardar en historial
@@ -137,10 +222,11 @@ window.initChat = function() {
                 });
 
                 console.log('Respuesta del bot:', response);
-            }, 800 + Math.random() * 400);
-
-            // Limpiar input
-            chatInput.value = '';
+            } catch (error) {
+                console.error('Error procesando respuesta:', error);
+                typingDiv.remove();
+                addMessage('Lo siento, hubo un error al procesar tu pregunta. Por favor intenta de nuevo.', false);
+            }
         }
 
         // Event listeners

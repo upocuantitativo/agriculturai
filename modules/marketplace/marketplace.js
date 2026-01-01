@@ -446,7 +446,35 @@ window.initMarketplace = function() {
             });
         }
 
-        // Búsqueda en Greenbook
+        // Búsqueda en EPA (GRATIS - reemplaza Greenbook)
+        const searchEPABtn = document.getElementById('search-epa-btn');
+        if (searchEPABtn && window.EPAAPI) {
+            searchEPABtn.addEventListener('click', () => {
+                window.EPAAPI.showProductSearchDialog((productData) => {
+                    // Callback cuando el usuario acepta un producto de EPA
+                    console.log('Producto de EPA seleccionado:', productData);
+
+                    // Verificar que no exista el ID
+                    if (allProducts.find(p => p.id === productData.id)) {
+                        // Generar nuevo ID único
+                        const timestamp = Date.now();
+                        productData.id = `epa-${timestamp}`;
+                    }
+
+                    // Agregar a la base de datos
+                    allProducts.push(productData);
+                    saveProductsToStorage();
+                    loadProductsAdmin();
+                    displayProducts(allProducts);
+                    filteredProducts = [...allProducts];
+
+                    // Mostrar confirmación
+                    alert(`Producto "${productData.name}" agregado correctamente desde EPA.\n\nEl producto está guardado temporalmente. Exporta el JSON para hacerlo permanente.`);
+                });
+            });
+        }
+
+        // Búsqueda en Greenbook (alternativa si tienes credenciales)
         const searchGreenbookBtn = document.getElementById('search-greenbook-btn');
         if (searchGreenbookBtn && window.GreenbookAPI) {
             searchGreenbookBtn.addEventListener('click', () => {
