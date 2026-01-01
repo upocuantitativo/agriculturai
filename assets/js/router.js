@@ -11,7 +11,8 @@ class Router {
             '/crops': 'pages/crops.html',
             '/chat': 'pages/chat.html',
             '/marketplace': 'pages/marketplace.html',
-            '/orders': 'pages/orders.html'
+            '/orders': 'pages/orders.html',
+            '/login': 'pages/login.html'
         };
 
         this.contentDiv = document.getElementById('app-content');
@@ -49,6 +50,31 @@ class Router {
         const path = window.location.pathname;
         this.currentPath = path;
 
+        // Verificar autenticación
+        if (window.auth && window.auth.requiresAuth(path) && !window.auth.isAuthenticated()) {
+            // Redirigir a login
+            window.history.pushState(null, null, '/login');
+            this.currentPath = '/login';
+            const route = this.routes['/login'];
+
+            window.utils.showLoading();
+
+            try {
+                const response = await fetch(route);
+                if (!response.ok) throw new Error(`Error cargando login: ${response.status}`);
+
+                const html = await response.text();
+                this.contentDiv.innerHTML = html;
+                this.hideNavbar();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (error) {
+                console.error('Error cargando login:', error);
+            } finally {
+                window.utils.hideLoading();
+            }
+            return;
+        }
+
         // Encontrar la ruta correspondiente
         const route = this.routes[path] || this.routes['/'];
 
@@ -67,6 +93,14 @@ class Router {
 
             // Actualizar estado activo en navbar
             this.updateActiveNavLink(path);
+
+            // Mostrar/ocultar navbar según autenticación
+            if (path === '/login') {
+                this.hideNavbar();
+            } else {
+                this.showNavbar();
+                this.updateUserInfo();
+            }
 
             // Ejecutar scripts específicos de la página
             this.executePageScripts(path);
@@ -126,6 +160,60 @@ class Router {
             } catch (error) {
                 console.error(`Error ejecutando ${initFunction}:`, error);
             }
+        }
+    }
+
+    navigateTo(url) {
+        this.navigate(url);
+    }
+
+    hideNavbar() {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            navbar.style.display = 'none';
+        }
+    }
+
+    showNavbar() {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            navbar.style.display = 'block';
+        }
+    }
+
+    updateUserInfo() {
+        if (!window.auth || !window.auth.isAuthenticated()) return;
+
+        const username = window.auth.getUsername();
+
+        // Buscar o crear el botón de usuario en la navbar
+        const navbar = document.querySelector('.navbar-nav');
+        if (!navbar) return;
+
+        // Verificar si ya existe el botón de logout
+        let userButton = document.getElementById('userDropdown');
+
+        if (!userButton) {
+            // Crear dropdown de usuario
+            const userDropdownHTML = `
+                <li class="nav-item dropdown ms-auto">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> ${username}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            `;
+            navbar.insertAdjacentHTML('beforeend', userDropdownHTML);
+
+            // Agregar evento de logout
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+                    window.auth.logout();
+                }
+            });
         }
     }
 }

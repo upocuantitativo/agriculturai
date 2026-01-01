@@ -1,0 +1,193 @@
+<div class="login-container">
+    <div class="row justify-content-center align-items-center" style="min-height: calc(100vh - 200px);">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <!-- Logo y título -->
+                    <div class="text-center mb-4">
+                        <i class="bi bi-flower2 text-success" style="font-size: 3rem;"></i>
+                        <h2 class="fw-bold mt-3 text-primary">AgriculturaI</h2>
+                        <p class="text-muted">Inicia sesión para continuar</p>
+                    </div>
+
+                    <!-- Formulario de login -->
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">
+                                <i class="bi bi-person-fill text-primary"></i> Usuario
+                            </label>
+                            <input
+                                type="text"
+                                class="form-control form-control-lg"
+                                id="username"
+                                name="username"
+                                placeholder="Ingresa tu usuario"
+                                required
+                                autocomplete="username"
+                            >
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label">
+                                <i class="bi bi-lock-fill text-primary"></i> Contraseña
+                            </label>
+                            <div class="input-group">
+                                <input
+                                    type="password"
+                                    class="form-control form-control-lg"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Ingresa tu contraseña"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    id="togglePassword"
+                                    aria-label="Mostrar/Ocultar contraseña"
+                                >
+                                    <i class="bi bi-eye" id="eyeIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje de error -->
+                        <div id="loginError" class="alert alert-danger d-none" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <span id="errorMessage">Usuario o contraseña incorrectos</span>
+                        </div>
+
+                        <!-- Botón de login -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                        </button>
+                    </form>
+
+                    <!-- Footer del login -->
+                    <div class="text-center mt-4">
+                        <small class="text-muted">
+                            <i class="bi bi-shield-check"></i> Acceso seguro
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="text-center mt-4">
+                <p class="text-muted small">
+                    <i class="bi bi-info-circle"></i>
+                    Plataforma de IA para agricultura
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: calc(100vh - 56px);
+        padding: 2rem 0;
+    }
+
+    .login-container .card {
+        border-radius: 1rem;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.98);
+    }
+
+    .login-container .form-control:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+    }
+
+    .login-container .btn-primary {
+        background: linear-gradient(135deg, #198754 0%, #20c997 100%);
+        border: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .login-container .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.4);
+    }
+
+    .login-container .input-group-text {
+        background: transparent;
+        border-left: none;
+    }
+
+    @media (max-width: 768px) {
+        .login-container {
+            padding: 1rem;
+        }
+
+        .login-container .card-body {
+            padding: 2rem 1.5rem !important;
+        }
+    }
+</style>
+
+<script>
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglePassword.addEventListener('click', () => {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        eyeIcon.className = type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+    });
+
+    // Handle login form submission
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        // Hide previous errors
+        loginError.classList.add('d-none');
+
+        // Validate credentials
+        const isValid = await window.auth.login(username, password);
+
+        if (isValid) {
+            // Redirect to home
+            window.router.navigateTo('/');
+        } else {
+            // Show error
+            loginError.classList.remove('d-none');
+
+            // Shake animation
+            loginForm.classList.add('shake');
+            setTimeout(() => {
+                loginForm.classList.remove('shake');
+            }, 500);
+
+            // Clear password
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    });
+</script>
+
+<style>
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+        20%, 40%, 60%, 80% { transform: translateX(10px); }
+    }
+
+    .shake {
+        animation: shake 0.5s;
+    }
+</style>
