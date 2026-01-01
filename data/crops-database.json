@@ -1,0 +1,607 @@
+{
+  "crops": [
+    {
+      "id": "tomate",
+      "name": "Tomate",
+      "scientificName": "Solanum lycopersicum",
+      "varieties": [
+        "Roma",
+        "Cherry",
+        "Beef (Carne)",
+        "Pera",
+        "Kumato",
+        "San Marzano",
+        "Raf"
+      ],
+      "growthCycle": 90,
+      "climate": {
+        "optimal": "18-27°C",
+        "minTemp": 10,
+        "maxTemp": 35,
+        "description": "Clima templado-cálido. Sensible a heladas"
+      },
+      "soilTypes": ["franco", "franco-arenoso", "franco-arcilloso"],
+      "phRange": {
+        "min": 6.0,
+        "max": 6.8,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Diaria en verano, cada 2-3 días en otras épocas",
+        "amount": "3-4 L/planta/día en producción",
+        "methods": ["goteo", "microaspersion"],
+        "waterRequirement": "400-600 mm/ciclo"
+      },
+      "fertilization": {
+        "prePlanting": "Compost o estiércol maduro 30-40 ton/ha, Superfosfato triple 150 kg/ha",
+        "vegetativeGrowth": "NPK 15-15-15 o 20-10-10, 200-300 kg/ha fraccionado",
+        "flowering": "Reducir nitrógeno, NPK 10-20-20",
+        "fruiting": "NPK 10-15-30, 150-200 kg/ha, Calcio foliar para prevenir podredumbre apical",
+        "micronutrients": "Boro, Zinc, Magnesio según análisis foliar"
+      },
+      "planting": {
+        "method": "Trasplante de plántulas (30-40 días)",
+        "spacing": "50-70 cm entre plantas, 100-150 cm entre hileras",
+        "density": "15000-25000 plantas/ha",
+        "depth": "Hasta las hojas cotiledonares"
+      },
+      "commonDiseases": ["late_blight", "early_blight", "bacterial_spot", "mosaic_virus", "fusarium_wilt"],
+      "commonPests": ["aphids", "whitefly", "spider_mites"],
+      "harvestTime": "75-90 días después de trasplante (según variedad)",
+      "harvestIndicators": [
+        "Color rojo uniforme (o según variedad)",
+        "Firmeza adecuada al tacto",
+        "Brillo en la piel",
+        "Facilidad de desprendimiento"
+      ],
+      "yield": "60-100 ton/ha en campo abierto, 150-300 ton/ha en invernadero",
+      "tips": [
+        "Tutorado indispensable (2-2.5 m altura)",
+        "Poda de chupones semanalmente",
+        "Deshoje de hojas inferiores para ventilación",
+        "Mulching para control de malezas y conservación de humedad",
+        "Polinización manual o abejorros en invernadero"
+      ]
+    },
+    {
+      "id": "papa",
+      "name": "Papa (Patata)",
+      "scientificName": "Solanum tuberosum",
+      "varieties": [
+        "Desirée",
+        "Spunta",
+        "Agria",
+        "Monalisa",
+        "Red Pontiac",
+        "Kennebec"
+      ],
+      "growthCycle": 120,
+      "climate": {
+        "optimal": "15-20°C",
+        "minTemp": 7,
+        "maxTemp": 25,
+        "description": "Clima fresco. Tubérización óptima a 15-20°C"
+      },
+      "soilTypes": ["franco", "franco-arenoso"],
+      "phRange": {
+        "min": 5.2,
+        "max": 6.5,
+        "optimal": 5.8
+      },
+      "irrigation": {
+        "frequency": "Cada 5-7 días según suelo y clima",
+        "amount": "25-35 mm por riego",
+        "methods": ["goteo", "aspersion", "gravedad"],
+        "waterRequirement": "500-700 mm/ciclo",
+        "critical": "Tuberización (60-90 días post-siembra)"
+      },
+      "fertilization": {
+        "prePlanting": "NPK 15-15-15 400-600 kg/ha, Estiércol 20-30 ton/ha",
+        "vegetativeGrowth": "Urea 100-150 kg/ha a los 30-40 días",
+        "tuberization": "Sulfato de potasio 150-200 kg/ha",
+        "micronutrients": "Boro, Zinc, especialmente en suelos alcalinos"
+      },
+      "planting": {
+        "method": "Tubérculos semilla (50-70 g, 2-3 yemas)",
+        "spacing": "25-35 cm entre plantas, 70-90 cm entre surcos",
+        "density": "35000-50000 plantas/ha",
+        "depth": "8-12 cm"
+      },
+      "commonDiseases": ["late_blight", "early_blight"],
+      "commonPests": ["aphids"],
+      "harvestTime": "90-150 días según variedad y destino (consumo fresco o almacenamiento)",
+      "harvestIndicators": [
+        "Amarillamiento y secado del follaje (70-80%)",
+        "Piel de tubérculos firme y adherida",
+        "Tamaño comercial alcanzado"
+      ],
+      "yield": "25-45 ton/ha promedio, hasta 70 ton/ha con buen manejo",
+      "tips": [
+        "Aporque a los 30-40 días (cubrir tubérculos)",
+        "Semilla certificada para evitar virus",
+        "Cortar riego 10-15 días antes de cosecha",
+        "Curado de tubérculos (15°C, 85-90% HR) post-cosecha",
+        "Rotación mínima 3-4 años para evitar patógenos del suelo"
+      ]
+    },
+    {
+      "id": "maiz",
+      "name": "Maíz",
+      "scientificName": "Zea mays",
+      "varieties": [
+        "Híbridos DK-390",
+        "Pioneer 30F35",
+        "Dekalb 747",
+        "Variedades criollas locales"
+      ],
+      "growthCycle": 120,
+      "climate": {
+        "optimal": "20-30°C",
+        "minTemp": 10,
+        "maxTemp": 35,
+        "description": "Cultivo de clima cálido. Sensible a heladas"
+      },
+      "soilTypes": ["franco", "franco-arcilloso", "franco-arenoso"],
+      "phRange": {
+        "min": 5.5,
+        "max": 7.5,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Cada 10-15 días en secano, 7-10 días con riego",
+        "amount": "50-70 mm por riego",
+        "methods": ["gravedad", "aspersion", "pivote"],
+        "waterRequirement": "500-800 mm/ciclo",
+        "critical": "Floración y llenado de grano (60-90 días post-siembra)"
+      },
+      "fertilization": {
+        "prePlanting": "Fósforo 60-80 kg P2O5/ha",
+        "vegetativeGrowth": "Nitrógeno 120-180 kg N/ha fraccionado (siembra, V6, V12)",
+        "flowering": "Nitrógeno 60-80 kg N/ha",
+        "micronutrients": "Zinc 10-20 kg/ha en suelos deficientes"
+      },
+      "planting": {
+        "method": "Siembra directa",
+        "spacing": "15-20 cm entre plantas, 70-80 cm entre hileras",
+        "density": "60000-80000 plantas/ha",
+        "depth": "4-6 cm"
+      },
+      "commonDiseases": [],
+      "commonPests": ["aphids"],
+      "harvestTime": "120-150 días (grano seco), 70-90 días (elote tierno)",
+      "harvestIndicators": [
+        "Humedad del grano 14-18% (grano seco)",
+        "Capa negra en la base del grano",
+        "Hojas y chalas secas",
+        "Grano lechoso-pastoso (elote tierno)"
+      ],
+      "yield": "8-12 ton/ha promedio, hasta 15-18 ton/ha con híbridos",
+      "tips": [
+        "Control de malezas crítico primeras 6 semanas",
+        "Deshije (eliminar hijuelos) en plantaciones densas",
+        "Polinización favorecida por plantación en bloques",
+        "Dobla de la planta 30 días antes de cosecha (opcional)",
+        "Rotación con leguminosas beneficiosa para el suelo"
+      ]
+    },
+    {
+      "id": "lechuga",
+      "name": "Lechuga",
+      "scientificName": "Lactuca sativa",
+      "varieties": [
+        "Iceberg",
+        "Romana",
+        "Batavia",
+        "Lollo Rosso",
+        "Oak Leaf",
+        "Mantecosa"
+      ],
+      "growthCycle": 60,
+      "climate": {
+        "optimal": "15-20°C",
+        "minTemp": 5,
+        "maxTemp": 25,
+        "description": "Clima fresco. Sube a flor con calor excesivo (>25°C)"
+      },
+      "soilTypes": ["franco", "franco-arenoso"],
+      "phRange": {
+        "min": 6.0,
+        "max": 7.0,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Diaria o cada 2 días",
+        "amount": "1-2 L/planta/día",
+        "methods": ["goteo", "aspersion"],
+        "waterRequirement": "200-350 mm/ciclo"
+      },
+      "fertilization": {
+        "prePlanting": "Compost 15-20 ton/ha, NPK 15-15-15 200 kg/ha",
+        "vegetativeGrowth": "Nitrato de calcio 100-150 kg/ha fraccionado",
+        "micronutrients": "Hierro, Boro si hay deficiencias"
+      },
+      "planting": {
+        "method": "Trasplante de plántulas (25-30 días) o siembra directa",
+        "spacing": "25-30 cm entre plantas, 30-40 cm entre hileras",
+        "density": "80000-130000 plantas/ha",
+        "depth": "0.5-1 cm (semilla muy pequeña)"
+      },
+      "commonDiseases": ["downy_mildew", "powdery_mildew"],
+      "commonPests": ["aphids"],
+      "harvestTime": "50-70 días desde trasplante (según variedad y época)",
+      "harvestIndicators": [
+        "Cabeza compacta y firme (Iceberg)",
+        "Tamaño comercial alcanzado",
+        "Antes de elongación del tallo (preavivar)"
+      ],
+      "yield": "25-40 ton/ha (30000-50000 cabezas)",
+      "tips": [
+        "Siembra escalonada cada 15 días para cosecha continua",
+        "Evitar encharcamiento (pudriciones basales)",
+        "Cosecha temprano en la mañana para mejor calidad",
+        "Enfriamiento rápido post-cosecha",
+        "Mulching para conservar humedad y reducir malezas"
+      ]
+    },
+    {
+      "id": "zanahoria",
+      "name": "Zanahoria",
+      "scientificName": "Daucus carota",
+      "varieties": [
+        "Nantes",
+        "Chantenay",
+        "Imperator",
+        "Kuroda",
+        "Danvers"
+      ],
+      "growthCycle": 90,
+      "climate": {
+        "optimal": "16-22°C",
+        "minTemp": 8,
+        "maxTemp": 28,
+        "description": "Clima fresco-templado. Raíces mejoran sabor con frío"
+      },
+      "soilTypes": ["franco", "franco-arenoso"],
+      "phRange": {
+        "min": 6.0,
+        "max": 7.0,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Cada 3-5 días",
+        "amount": "20-30 mm por riego",
+        "methods": ["goteo", "aspersion"],
+        "waterRequirement": "350-550 mm/ciclo"
+      },
+      "fertilization": {
+        "prePlanting": "Compost bien descompuesto 20-30 ton/ha, Evitar estiércol fresco (raíces deformes)",
+        "vegetativeGrowth": "NPK 10-20-20 300-400 kg/ha fraccionado",
+        "micronutrients": "Boro 1-2 kg/ha para prevenir corazón negro"
+      },
+      "planting": {
+        "method": "Siembra directa",
+        "spacing": "5-8 cm entre plantas después de raleo, 25-30 cm entre hileras",
+        "density": "400000-600000 plantas/ha",
+        "depth": "1-1.5 cm"
+      },
+      "commonDiseases": [],
+      "commonPests": ["aphids"],
+      "harvestTime": "80-120 días según variedad y tamaño deseado",
+      "harvestIndicators": [
+        "Diámetro superior 2.5-4 cm",
+        "Color naranja intenso",
+        "Raíz completamente desarrollada según variedad"
+      ],
+      "yield": "40-70 ton/ha",
+      "tips": [
+        "Suelo profundo (30-40 cm) y suelto esencial",
+        "Raleo a 5-8 cm cuando plantas tengan 5-8 cm altura",
+        "Evitar suelos pedregosos (raíces deformes)",
+        "Humedad constante en germinación (7-14 días)",
+        "Cosechar con suelo húmedo para evitar roturas"
+      ]
+    },
+    {
+      "id": "cebolla",
+      "name": "Cebolla",
+      "scientificName": "Allium cepa",
+      "varieties": [
+        "Grano (valencianas)",
+        "Babosa (dulces)",
+        "Red Baron",
+        "Southport White Globe"
+      ],
+      "growthCycle": 150,
+      "climate": {
+        "optimal": "15-25°C",
+        "minTemp": 7,
+        "maxTemp": 30,
+        "description": "Clima templado. Requiere fotoperiodo largo (14-16h) para bulbificación"
+      },
+      "soilTypes": ["franco", "franco-arcilloso"],
+      "phRange": {
+        "min": 6.0,
+        "max": 7.0,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Cada 7-10 días",
+        "amount": "25-35 mm por riego",
+        "methods": ["goteo", "gravedad", "aspersion"],
+        "waterRequirement": "400-600 mm/ciclo",
+        "critical": "Suspender 15-20 días antes de cosecha"
+      },
+      "fertilization": {
+        "prePlanting": "NPK 15-15-15 400-500 kg/ha",
+        "vegetativeGrowth": "Urea 100-150 kg/ha a los 30-40 días",
+        "bulbing": "Sulfato de potasio 150-200 kg/ha",
+        "micronutrients": "Azufre importante para calidad del bulbo"
+      },
+      "planting": {
+        "method": "Trasplante de plántulas (60-70 días) o siembra directa",
+        "spacing": "10-15 cm entre plantas, 30-40 cm entre hileras",
+        "density": "200000-330000 plantas/ha",
+        "depth": "2-3 cm (raíz al nivel del suelo en trasplante)"
+      },
+      "commonDiseases": ["downy_mildew"],
+      "commonPests": [],
+      "harvestTime": "150-180 días desde siembra",
+      "harvestIndicators": [
+        "Caída del follaje (70-80%)",
+        "Cuello delgado y seco",
+        "Túnicas externas secas y papiráceas"
+      ],
+      "yield": "40-80 ton/ha",
+      "tips": [
+        "Curado esencial: 7-14 días a 25-30°C",
+        "Evitar exceso de nitrógeno (reduce conservación)",
+        "Control de malezas crítico (crecimiento lento inicial)",
+        "Arrancar con tiempo seco para mejor curado",
+        "Almacenamiento: 0-2°C, 65-70% HR"
+      ]
+    },
+    {
+      "id": "pimiento",
+      "name": "Pimiento (Pimentón)",
+      "scientificName": "Capsicum annuum",
+      "varieties": [
+        "California Wonder",
+        "Piquillo",
+        "Padrón",
+        "Italiano",
+        "Lamuyo"
+      ],
+      "growthCycle": 100,
+      "climate": {
+        "optimal": "20-28°C",
+        "minTemp": 15,
+        "maxTemp": 32,
+        "description": "Clima cálido. Muy sensible a heladas"
+      },
+      "soilTypes": ["franco", "franco-arenoso"],
+      "phRange": {
+        "min": 6.0,
+        "max": 7.0,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Cada 2-3 días en producción",
+        "amount": "2-3 L/planta/día",
+        "methods": ["goteo", "microaspersion"],
+        "waterRequirement": "600-900 mm/ciclo"
+      },
+      "fertilization": {
+        "prePlanting": "Compost 25-35 ton/ha, Superfosfato 100-150 kg/ha",
+        "vegetativeGrowth": "NPK 15-15-15 200-300 kg/ha",
+        "flowering": "NPK 10-20-20",
+        "fruiting": "Calcio y magnesio foliares",
+        "micronutrients": "Boro, Molibdeno"
+      },
+      "planting": {
+        "method": "Trasplante de plántulas (45-60 días)",
+        "spacing": "40-50 cm entre plantas, 80-100 cm entre hileras",
+        "density": "20000-30000 plantas/ha",
+        "depth": "Hasta hojas cotiledonares"
+      },
+      "commonDiseases": ["bacterial_spot", "mosaic_virus"],
+      "commonPests": ["aphids", "whitefly", "spider_mites"],
+      "harvestTime": "70-100 días después de trasplante",
+      "harvestIndicators": [
+        "Color desarrollado según variedad (verde, rojo, amarillo)",
+        "Fruto firme y brillante",
+        "Tamaño comercial (8-15 cm según tipo)"
+      ],
+      "yield": "30-60 ton/ha en campo, 100-150 ton/ha en invernadero",
+      "tips": [
+        "Tutorado en variedades altas",
+        "Poda de chupones y hojas basales",
+        "Mulching para control térmico",
+        "Evitar estrés hídrico (reduce floración)",
+        "Polinización mejora con vibración ligera"
+      ]
+    },
+    {
+      "id": "fresa",
+      "name": "Fresa (Frutilla)",
+      "scientificName": "Fragaria x ananassa",
+      "varieties": [
+        "Albion",
+        "Camarosa",
+        "Monterey",
+        "San Andreas",
+        "Camino Real"
+      ],
+      "growthCycle": 90,
+      "climate": {
+        "optimal": "15-25°C",
+        "minTemp": 5,
+        "maxTemp": 30,
+        "description": "Clima templado-fresco. Requiere horas frío para floración (200-500h <7°C)"
+      },
+      "soilTypes": ["franco", "franco-arenoso"],
+      "phRange": {
+        "min": 5.5,
+        "max": 6.5,
+        "optimal": 6.0
+      },
+      "irrigation": {
+        "frequency": "Diaria o cada 2 días",
+        "amount": "2-4 L/planta/día según etapa",
+        "methods": ["goteo", "microaspersion"],
+        "waterRequirement": "400-800 mm/ciclo"
+      },
+      "fertilization": {
+        "prePlanting": "Compost 30-40 ton/ha, Enmiendas según análisis",
+        "vegetativeGrowth": "NPK 10-10-10 200 kg/ha",
+        "flowering": "Reducir nitrógeno, aumentar fósforo y potasio",
+        "fruiting": "Fertirriego semanal con NPK 8-16-32",
+        "micronutrients": "Hierro, Zinc, Boro"
+      },
+      "planting": {
+        "method": "Trasplante de coronas o frigo-plantas",
+        "spacing": "25-30 cm entre plantas, 80-100 cm entre hileras (camellones)",
+        "density": "40000-60000 plantas/ha",
+        "depth": "Corona al nivel del suelo"
+      },
+      "commonDiseases": ["powdery_mildew", "downy_mildew"],
+      "commonPests": ["spider_mites", "aphids"],
+      "harvestTime": "90-120 días desde trasplante, luego continua 6-10 meses",
+      "harvestIndicators": [
+        "Color rojo brillante (75-100% de la superficie)",
+        "Firmeza adecuada",
+        "Aroma característico",
+        "Cosechar con cáliz y 1 cm de pedúnculo"
+      ],
+      "yield": "30-60 ton/ha en suelo, hasta 100 ton/ha en sustrato",
+      "tips": [
+        "Mulching con plástico negro o paja",
+        "Eliminar estolones regularmente",
+        "Renovar plantación cada 1-2 años",
+        "Cosechar en horas frescas del día",
+        "Enfriamiento inmediato post-cosecha (4°C)",
+        "Solarización del suelo antes de plantar"
+      ]
+    },
+    {
+      "id": "pepino",
+      "name": "Pepino",
+      "scientificName": "Cucumis sativus",
+      "varieties": [
+        "Ashley",
+        "Marketmore",
+        "Japonés",
+        "Pepinillo (para encurtir)",
+        "Híbridos partenocárpicos"
+      ],
+      "growthCycle": 60,
+      "climate": {
+        "optimal": "20-30°C",
+        "minTemp": 15,
+        "maxTemp": 35,
+        "description": "Clima cálido. Muy sensible a heladas"
+      },
+      "soilTypes": ["franco", "franco-arenoso"],
+      "phRange": {
+        "min": 6.0,
+        "max": 7.0,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Diaria en producción",
+        "amount": "3-5 L/planta/día",
+        "methods": ["goteo"],
+        "waterRequirement": "400-600 mm/ciclo"
+      },
+      "fertilization": {
+        "prePlanting": "Compost 30 ton/ha, NPK 15-15-15 200 kg/ha",
+        "vegetativeGrowth": "Fertirriego con NPK 20-10-20",
+        "fruiting": "Fertirriego con NPK 15-5-30 más calcio",
+        "micronutrients": "Magnesio, Hierro"
+      },
+      "planting": {
+        "method": "Siembra directa o trasplante (20-25 días)",
+        "spacing": "50-60 cm entre plantas, 100-150 cm entre hileras",
+        "density": "10000-20000 plantas/ha",
+        "depth": "2-3 cm"
+      },
+      "commonDiseases": ["powdery_mildew", "downy_mildew", "mosaic_virus"],
+      "commonPests": ["whitefly", "aphids", "spider_mites"],
+      "harvestTime": "50-70 días desde siembra, cosecha continua 8-12 semanas",
+      "harvestIndicators": [
+        "Tamaño: 15-25 cm (pepino) o 5-10 cm (pepinillo)",
+        "Color verde oscuro uniforme",
+        "Firmeza, sin amarillamiento",
+        "Cosechar diariamente o cada 2 días"
+      ],
+      "yield": "40-80 ton/ha en campo, 150-300 ton/ha en invernadero",
+      "tips": [
+        "Tutorado vertical en invernadero",
+        "Deshoje de hojas viejas para ventilación",
+        "Polinización con abejas en variedades no partenocárpicas",
+        "Evitar estrés hídrico (frutos amargos)",
+        "Cosechar antes de semillas endurecidas"
+      ]
+    },
+    {
+      "id": "calabaza",
+      "name": "Calabaza (Zapallo)",
+      "scientificName": "Cucurbita maxima/moschata/pepo",
+      "varieties": [
+        "Butternut",
+        "Kabocha",
+        "Hubbard",
+        "Zucchini (calabacín)",
+        "Zapallo italiano"
+      ],
+      "growthCycle": 100,
+      "climate": {
+        "optimal": "18-28°C",
+        "minTemp": 10,
+        "maxTemp": 35,
+        "description": "Clima templado-cálido. Sensible a heladas"
+      },
+      "soilTypes": ["franco", "franco-arcilloso"],
+      "phRange": {
+        "min": 6.0,
+        "max": 7.0,
+        "optimal": 6.5
+      },
+      "irrigation": {
+        "frequency": "Cada 5-7 días",
+        "amount": "40-60 mm por riego",
+        "methods": ["goteo", "gravedad"],
+        "waterRequirement": "400-600 mm/ciclo",
+        "critical": "Floración y desarrollo de frutos"
+      },
+      "fertilization": {
+        "prePlanting": "Compost 20-30 ton/ha, NPK 15-15-15 300 kg/ha",
+        "vegetativeGrowth": "Urea 50-100 kg/ha",
+        "fruiting": "Sulfato de potasio 100-150 kg/ha",
+        "micronutrients": "Boro para mejor cuajado"
+      },
+      "planting": {
+        "method": "Siembra directa (preferible) o trasplante cuidadoso",
+        "spacing": "100-150 cm entre plantas, 200-300 cm entre hileras",
+        "density": "2000-5000 plantas/ha según tipo",
+        "depth": "3-5 cm"
+      },
+      "commonDiseases": ["powdery_mildew", "downy_mildew"],
+      "commonPests": ["whitefly", "aphids"],
+      "harvestTime": "90-120 días para fruto maduro, 40-60 días para calabacín inmaduro",
+      "harvestIndicators": [
+        "Corteza dura (no se marca con uña)",
+        "Pedúnculo seco y corchoso",
+        "Color característico según variedad",
+        "Sonido hueco al golpear"
+      ],
+      "yield": "20-40 ton/ha (calabaza madura), 30-60 ton/ha (calabacín)",
+      "tips": [
+        "Polinización manual en invernadero",
+        "Curado post-cosecha: 10 días a 25-30°C",
+        "Almacenamiento: 10-15°C, 50-70% HR (varios meses)",
+        "Guiar tallos para distribuir planta",
+        "Cosechar con pedúnculo para mejor conservación"
+      ]
+    }
+  ]
+}

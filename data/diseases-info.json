@@ -1,0 +1,420 @@
+{
+  "late_blight": {
+    "name": "Tizón tardío",
+    "scientificName": "Phytophthora infestans",
+    "affectedCrops": ["tomate", "papa"],
+    "symptoms": [
+      "Manchas marrones irregulares en hojas",
+      "Bordes amarillentos alrededor de las manchas",
+      "Moho blanco grisáceo en el envés de las hojas",
+      "Pudrición de tallos y frutos",
+      "Olor desagradable en tejidos afectados"
+    ],
+    "causes": "Hongo que se desarrolla en condiciones de alta humedad (>90%) y temperaturas entre 10-25°C. Se propaga rápidamente por el viento y agua de lluvia.",
+    "treatment": {
+      "organic": [
+        "Eliminar inmediatamente plantas muy afectadas",
+        "Aplicar caldo bordelés (sulfato de cobre + cal)",
+        "Extracto de cola de caballo como preventivo",
+        "Mejorar circulación de aire entre plantas"
+      ],
+      "chemical": [
+        "Fungicida cúprico (Oxicloruro de cobre 50%)",
+        "Mancozeb 80% cada 7-10 días",
+        "Metalaxil + Mancozeb en casos severos",
+        "Alternar productos para evitar resistencia"
+      ]
+    },
+    "prevention": [
+      "Evitar exceso de humedad en el follaje",
+      "No regar por aspersión, usar riego por goteo",
+      "Espaciamiento adecuado entre plantas (40-50 cm)",
+      "Rotación de cultivos (3 años mínimo)",
+      "Variedades resistentes cuando sea posible",
+      "Eliminar restos de cultivos anteriores"
+    ],
+    "severity": "alta",
+    "recommendedProducts": ["p002", "p006"]
+  },
+  "early_blight": {
+    "name": "Tizón temprano",
+    "scientificName": "Alternaria solani",
+    "affectedCrops": ["tomate", "papa", "pimiento"],
+    "symptoms": [
+      "Manchas concéntricas (forma de diana) en hojas viejas",
+      "Color marrón oscuro con anillos",
+      "Amarillamiento y caída de hojas inferiores",
+      "Lesiones en tallos cerca del suelo",
+      "Manchas oscuras hundidas en frutos"
+    ],
+    "causes": "Hongo que se desarrolla en clima cálido (24-29°C) y humedad moderada. Sobrevive en restos vegetales y semillas infectadas.",
+    "treatment": {
+      "organic": [
+        "Remover hojas afectadas de la parte inferior",
+        "Bicarbonato de sodio 1% + aceite vegetal",
+        "Extracto de ajo como antifúngico natural",
+        "Mantillo para evitar salpicaduras desde el suelo"
+      ],
+      "chemical": [
+        "Clorotalonil 75%",
+        "Azoxistrobina",
+        "Mancozeb preventivo",
+        "Aplicar cada 10-14 días durante período crítico"
+      ]
+    },
+    "prevention": [
+      "Rotación de cultivos de 2-3 años",
+      "Semillas certificadas libres de patógenos",
+      "Riego por goteo o surcos, nunca aspersión",
+      "Fertilización balanceada (evitar exceso de nitrógeno)",
+      "Poda de hojas inferiores para mejor ventilación",
+      "Destruir restos de plantas al final del ciclo"
+    ],
+    "severity": "media",
+    "recommendedProducts": ["p002", "p006"]
+  },
+  "powdery_mildew": {
+    "name": "Oídio",
+    "scientificName": "Oidium spp., Erysiphe spp.",
+    "affectedCrops": ["tomate", "pepino", "calabaza", "fresa"],
+    "symptoms": [
+      "Polvo blanco harinoso sobre hojas",
+      "Principalmente en haz de hojas jóvenes",
+      "Deformación de hojas nuevas",
+      "Amarillamiento y secado de hojas afectadas",
+      "Reducción del crecimiento de la planta"
+    ],
+    "causes": "Hongos que proliferan en clima seco y cálido (20-27°C) con alta humedad relativa. No requieren agua libre en las hojas.",
+    "treatment": {
+      "organic": [
+        "Azufre mojable 80%",
+        "Bicarbonato de potasio 0.5%",
+        "Leche diluida 1:10 con agua",
+        "Aceite de neem al 2%"
+      ],
+      "chemical": [
+        "Azufre micronizado",
+        "Trifloxistrobin",
+        "Tebuconazol",
+        "Evitar aplicar azufre con temperaturas >30°C"
+      ]
+    },
+    "prevention": [
+      "Variedades resistentes",
+      "Espaciamiento amplio entre plantas",
+      "Riego temprano en la mañana",
+      "Evitar exceso de fertilización nitrogenada",
+      "Poda para mejorar circulación de aire",
+      "Desinfectar herramientas entre plantas"
+    ],
+    "severity": "media",
+    "recommendedProducts": ["p006"]
+  },
+  "bacterial_spot": {
+    "name": "Mancha bacteriana",
+    "scientificName": "Xanthomonas campestris",
+    "affectedCrops": ["tomate", "pimiento"],
+    "symptoms": [
+      "Pequeñas manchas negras con halo amarillo en hojas",
+      "Lesiones corchosas en frutos",
+      "Caída prematura de hojas",
+      "Defoliación severa en casos avanzados",
+      "Manchas grasientas en tallos"
+    ],
+    "causes": "Bacteria que se propaga por salpicaduras de agua, herramientas contaminadas y semillas infectadas. Favorecida por clima cálido y húmedo.",
+    "treatment": {
+      "organic": [
+        "Cobre (aunque de eficacia limitada)",
+        "Eliminar plantas muy infectadas",
+        "Biocontroladores (Bacillus spp.)",
+        "Evitar trabajar con plantas mojadas"
+      ],
+      "chemical": [
+        "Oxicloruro de cobre + Mancozeb",
+        "Estreptomicina (donde esté permitido)",
+        "Aplicaciones preventivas semanales",
+        "Tratamiento de semillas con agua caliente"
+      ]
+    },
+    "prevention": [
+      "Semillas certificadas o tratadas",
+      "Rotación de cultivos mínimo 2 años",
+      "Riego por goteo exclusivamente",
+      "Desinfección de herramientas (alcohol 70%)",
+      "No trabajar con follaje mojado",
+      "Variedades resistentes",
+      "Eliminación de restos vegetales"
+    ],
+    "severity": "alta",
+    "recommendedProducts": ["p002"]
+  },
+  "mosaic_virus": {
+    "name": "Virus del mosaico",
+    "scientificName": "Tobacco Mosaic Virus (TMV), Cucumber Mosaic Virus (CMV)",
+    "affectedCrops": ["tomate", "pepino", "pimiento", "lechuga"],
+    "symptoms": [
+      "Patrón de mosaico verde claro y oscuro en hojas",
+      "Deformación y enrollamiento de hojas",
+      "Enanismo de la planta",
+      "Frutos con manchas y deformaciones",
+      "Reducción severa de rendimiento"
+    ],
+    "causes": "Virus transmitidos por áfidos, contacto mecánico, semillas infectadas. TMV extremadamente resistente, puede sobrevivir años en restos vegetales.",
+    "treatment": {
+      "organic": [
+        "NO HAY CURA - solo prevención",
+        "Eliminar plantas infectadas inmediatamente",
+        "Control de vectores (áfidos) con jabón potásico",
+        "Desinfectar manos y herramientas con leche descremada"
+      ],
+      "chemical": [
+        "NO HAY TRATAMIENTO QUÍMICO EFECTIVO",
+        "Control de áfidos con insecticidas sistémicos",
+        "Imidacloprid para prevenir transmisión",
+        "Aceite mineral como repelente de vectores"
+      ]
+    },
+    "prevention": [
+      "Semillas certificadas libres de virus",
+      "Variedades resistentes (TMV-R)",
+      "Control estricto de áfidos",
+      "Desinfectar herramientas entre plantas",
+      "Lavado de manos antes de trabajar",
+      "Eliminar malezas hospederas",
+      "No fumar cerca del cultivo (TMV en tabaco)",
+      "Barreras físicas contra insectos vectores"
+    ],
+    "severity": "muy_alta",
+    "recommendedProducts": ["p003", "p005"]
+  },
+  "downy_mildew": {
+    "name": "Mildiu velloso",
+    "scientificName": "Peronospora spp., Plasmopara viticola",
+    "affectedCrops": ["lechuga", "cebolla", "pepino", "fresa"],
+    "symptoms": [
+      "Manchas amarillas angulares en haz de hojas",
+      "Pelusa blanca-grisácea en envés",
+      "Necrosis de tejido afectado",
+      "Caída prematura de hojas",
+      "Pudrición de frutos en contacto con follaje enfermo"
+    ],
+    "causes": "Oomiceto favorecido por alta humedad (>85%), temperaturas 15-20°C, rocío nocturno prolongado. Se propaga por esporas en el viento.",
+    "treatment": {
+      "organic": [
+        "Caldo bordelés preventivo",
+        "Bicarbonato de potasio",
+        "Extracto de cola de caballo",
+        "Mejorar drenaje y aireación"
+      ],
+      "chemical": [
+        "Metalaxil",
+        "Fosetil-aluminio",
+        "Mancozeb + Metalaxil",
+        "Aplicaciones preventivas cada 7-10 días"
+      ]
+    },
+    "prevention": [
+      "Espaciamiento amplio (30-40 cm)",
+      "Riego matutino para secado rápido",
+      "Evitar riego por aspersión nocturno",
+      "Mulching para reducir humedad foliar",
+      "Variedades resistentes",
+      "Rotación de cultivos",
+      "Ventilación en invernaderos"
+    ],
+    "severity": "alta",
+    "recommendedProducts": ["p002", "p006"]
+  },
+  "fusarium_wilt": {
+    "name": "Marchitez por Fusarium",
+    "scientificName": "Fusarium oxysporum",
+    "affectedCrops": ["tomate", "pepino", "fresa", "lechuga"],
+    "symptoms": [
+      "Marchitez de hojas inferiores en un lado de la planta",
+      "Amarillamiento progresivo hacia arriba",
+      "Oscurecimiento vascular en tallos (corte transversal)",
+      "Muerte de la planta en 2-4 semanas",
+      "Síntomas más severos en clima cálido"
+    ],
+    "causes": "Hongo del suelo que penetra por raíces, especialmente heridas. Sobrevive décadas en el suelo. Favorecido por temperaturas 25-28°C y pH 5-5.5.",
+    "treatment": {
+      "organic": [
+        "NO HAY CURA una vez infectada",
+        "Arrancar y destruir plantas enfermas",
+        "Solarización del suelo (6-8 semanas)",
+        "Enmiendas orgánicas para microbiota beneficiosa"
+      ],
+      "chemical": [
+        "NO HAY FUNGICIDAS CURATIVOS EFECTIVOS",
+        "Fumigación de suelo (metam sodio) - antes de plantar",
+        "Fungicidas sistémicos como preventivos",
+        "Injerto en portainjertos resistentes"
+      ]
+    },
+    "prevention": [
+      "Variedades resistentes (F1, F2, F3 según raza)",
+      "Rotación de cultivos mínimo 4 años",
+      "pH del suelo 6.5-7.0",
+      "Evitar heridas en raíces",
+      "Desinfección de suelo antes de plantar",
+      "Uso de portainjertos resistentes",
+      "Riego equilibrado (evitar encharcamiento)"
+    ],
+    "severity": "muy_alta",
+    "recommendedProducts": []
+  },
+  "aphids": {
+    "name": "Pulgones (Áfidos)",
+    "scientificName": "Aphis spp., Myzus persicae",
+    "affectedCrops": ["tomate", "lechuga", "pimiento", "fresa", "todos"],
+    "symptoms": [
+      "Pequeños insectos (1-3mm) verdes, negros o amarillos en brotes",
+      "Hojas enrolladas y deformadas",
+      "Melaza pegajosa en hojas (favorece fumagina)",
+      "Debilitamiento general de la planta",
+      "Transmisión de virus (CMV, TMV)"
+    ],
+    "causes": "Insectos chupadores que colonizan rápidamente en clima templado. Se reproducen sin apareamiento (partenogénesis). Atraídos por exceso de nitrógeno.",
+    "treatment": {
+      "organic": [
+        "Jabón potásico 2% (2-3 aplicaciones)",
+        "Aceite de neem 1%",
+        "Agua a presión para desalojar colonias",
+        "Enemigos naturales: mariquitas, crisopas",
+        "Purín de ortigas diluido"
+      ],
+      "chemical": [
+        "Imidacloprid sistémico",
+        "Piretrinas naturales",
+        "Acetamiprid",
+        "Rotar productos para evitar resistencia",
+        "Aplicar al detectar primeras colonias"
+      ]
+    },
+    "prevention": [
+      "Mallas antiáfidos en cultivos protegidos",
+      "Plantas trampa (capuchinas, caléndulas)",
+      "Mantener flora beneficiosa (refugio de depredadores)",
+      "Fertilización balanceada (evitar exceso N)",
+      "Monitoreo semanal de brotes",
+      "Trampas amarillas adhesivas",
+      "Eliminar malezas hospederas"
+    ],
+    "severity": "media",
+    "recommendedProducts": ["p003", "p005", "p008"]
+  },
+  "whitefly": {
+    "name": "Mosca blanca",
+    "scientificName": "Bemisia tabaci, Trialeurodes vaporariorum",
+    "affectedCrops": ["tomate", "pepino", "pimiento", "fresa"],
+    "symptoms": [
+      "Pequeñas moscas blancas (1-2mm) en envés de hojas",
+      "Nubes de insectos al agitar la planta",
+      "Melaza y fumagina en hojas",
+      "Amarillamiento y debilitamiento",
+      "Transmisión de geminivirus"
+    ],
+    "causes": "Insecto chupador que se multiplica rápidamente en clima cálido (>25°C). Una hembra pone 100-300 huevos. Ciclo completo: 25-30 días.",
+    "treatment": {
+      "organic": [
+        "Jabón potásico + aceite de neem (muy efectivo)",
+        "Trampas amarillas adhesivas",
+        "Aspiradora manual en invernaderos",
+        "Enemigos naturales: Encarsia formosa (parasitoide)",
+        "Extracto de ajo y guindilla"
+      ],
+      "chemical": [
+        "Imidacloprid (sistémico)",
+        "Spiromesifen (específico para mosca blanca)",
+        "Aceite mineral + insecticida",
+        "Aplicar también en envés de hojas",
+        "Tratar todas las plantas simultáneamente"
+      ]
+    },
+    "prevention": [
+      "Mallas antiinsectos (0.5mm) en aberturas",
+      "Trampas amarillas desde inicio del cultivo",
+      "Eliminar malezas hospederas (especialmente Solanáceas)",
+      "Inspección de plantas antes de introducir al cultivo",
+      "Rotación con cultivos no hospederos",
+      "Liberación preventiva de Encarsia",
+      "Evitar monocultivos extensos"
+    ],
+    "severity": "alta",
+    "recommendedProducts": ["p003", "p005"]
+  },
+  "spider_mites": {
+    "name": "Araña roja",
+    "scientificName": "Tetranychus urticae",
+    "affectedCrops": ["tomate", "pepino", "fresa", "pimiento"],
+    "symptoms": [
+      "Punteado amarillo en hojas (picaduras)",
+      "Telarañas finas en envés y brotes",
+      "Bronceado y desecación de hojas",
+      "Ácaros rojos/amarillos visibles con lupa",
+      "Defoliación severa en infestaciones avanzadas"
+    ],
+    "causes": "Ácaro microscópico (0.5mm) que prolifera en clima seco y cálido (>27°C, HR<50%). Ciclo de vida: 7-10 días. Desarrolla resistencia rápidamente.",
+    "treatment": {
+      "organic": [
+        "Azufre mojable (efectivo y económico)",
+        "Aceite de neem con jabón potásico",
+        "Agua a presión en envés de hojas",
+        "Ácaros depredadores: Phytoseiulus persimilis",
+        "Extracto de ajo"
+      ],
+      "chemical": [
+        "Abamectina",
+        "Spiromesifen",
+        "Azufre (orgánico pero efectivo)",
+        "Rotar modos de acción para evitar resistencia",
+        "NO usar piretroides (eliminan depredadores)"
+      ]
+    },
+    "prevention": [
+      "Mantener humedad relativa >60%",
+      "Riego por aspersión ocasional (limpia hojas)",
+      "Evitar polvo (regar caminos)",
+      "Plantas indicadoras (judías) para monitoreo",
+      "Liberación preventiva de depredadores",
+      "Evitar exceso de nitrógeno",
+      "Eliminar plantas muy afectadas"
+    ],
+    "severity": "alta",
+    "recommendedProducts": ["p005"]
+  },
+  "healthy_plant": {
+    "name": "Planta sana",
+    "scientificName": "N/A",
+    "affectedCrops": ["todos"],
+    "symptoms": [
+      "Hojas de color verde uniforme",
+      "Sin manchas, deformaciones o decoloraciones",
+      "Crecimiento vigoroso",
+      "Sin presencia de insectos o hongos",
+      "Buen desarrollo de flores y frutos"
+    ],
+    "causes": "Manejo adecuado del cultivo con buenas prácticas agrícolas.",
+    "treatment": {
+      "organic": [
+        "Mantener el programa de fertilización actual",
+        "Continuar con riego adecuado",
+        "Seguir monitoreando semanalmente"
+      ],
+      "chemical": [
+        "No se requiere aplicación de productos",
+        "Mantener programa preventivo si existe"
+      ]
+    },
+    "prevention": [
+      "Mantener las buenas prácticas actuales",
+      "Monitoreo regular de posibles problemas",
+      "Fertilización balanceada",
+      "Riego adecuado según etapa del cultivo",
+      "Rotación de cultivos",
+      "Control preventivo de malezas"
+    ],
+    "severity": "ninguna",
+    "recommendedProducts": []
+  }
+}

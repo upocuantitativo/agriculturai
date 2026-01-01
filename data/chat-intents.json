@@ -1,0 +1,220 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "hola",
+        "buenos días",
+        "buenas tardes",
+        "saludos",
+        "qué tal",
+        "hey"
+      ],
+      "responses": [
+        "¡Hola! Soy tu asistente agrícola. ¿En qué puedo ayudarte hoy? Puedo asesorarte sobre enfermedades de plantas, riego, fertilización, plagas y más.",
+        "¡Buen día! Estoy aquí para ayudarte con tus cultivos. ¿Tienes alguna pregunta sobre agricultura?"
+      ],
+      "context": ""
+    },
+    {
+      "tag": "disease_tomato_late_blight",
+      "patterns": [
+        "mi tomate tiene manchas marrones",
+        "hojas de tomate con manchas oscuras",
+        "tizón tardío en tomate",
+        "phytophthora en tomate",
+        "tomate con moho blanco",
+        "manchas marrones en hojas de tomate"
+      ],
+      "responses": [
+        "Parece ser **tizón tardío** (Phytophthora infestans). Es una enfermedad fúngica seria.\n\n**Tratamiento urgente:**\n1. Elimina las hojas muy afectadas\n2. Aplica fungicida cúprico cada 7-10 días\n3. Mejora la ventilación entre plantas\n4. Evita mojar el follaje al regar\n\n**Productos recomendados:** Oxicloruro de cobre 50%, Mancozeb 80%\n\n¿Quieres que te muestre productos disponibles?"
+      ],
+      "context": "disease_diagnosis"
+    },
+    {
+      "tag": "disease_powdery_mildew",
+      "patterns": [
+        "polvo blanco en hojas",
+        "oídio",
+        "manchas blancas harinosas",
+        "mis hojas tienen polvo blanco",
+        "hongo blanco en hojas"
+      ],
+      "responses": [
+        "Esto es **oídio** (mildiu polvoriento). Es un hongo común que forma ese polvo blanco característico.\n\n**Tratamiento:**\n1. Azufre mojable 80% (muy efectivo)\n2. Bicarbonato de potasio 0.5% (orgánico)\n3. Mejora la circulación de aire\n4. Reduce humedad relativa si es en invernadero\n\n**Prevención:** Espaciamiento adecuado, poda para ventilación, evitar exceso de nitrógeno.\n\n¿Afecta a algún cultivo en particular?"
+      ],
+      "context": "disease_diagnosis"
+    },
+    {
+      "tag": "irrigation_general",
+      "patterns": [
+        "cuánta agua necesita",
+        "cómo regar",
+        "frecuencia de riego",
+        "cuánto riego",
+        "cada cuánto regar",
+        "necesidades de agua"
+      ],
+      "responses": [
+        "El riego depende del **cultivo, clima y etapa de crecimiento**. Aquí algunas guías generales:\n\n**Frecuencia:**\n• Tomate: 3-4 L/planta/día en producción\n• Lechuga: 1-2 L/planta/día\n• Pimiento: 2-3 L/planta/día\n• Papa: cada 5-7 días (25-35 mm)\n\n**Métodos recomendados:**\n• Goteo: más eficiente, ahorra hasta 50% de agua\n• Aspersión: buena cobertura, mayor consumo\n\n**Consejo:** Riega temprano en la mañana. Evita mojar el follaje en cultivos sensibles a hongos.\n\n¿Sobre qué cultivo específico necesitas información?"
+      ],
+      "context": "irrigation"
+    },
+    {
+      "tag": "irrigation_tomato",
+      "patterns": [
+        "riego del tomate",
+        "cuánta agua necesita el tomate",
+        "regar tomates",
+        "frecuencia de riego tomate"
+      ],
+      "responses": [
+        "**Riego del tomate:**\n\n**Cantidad:** 3-4 litros/planta/día en producción (menos al inicio)\n**Frecuencia:** Diario en verano, cada 2 días en primavera/otoño\n**Método ideal:** Goteo (evita mojar hojas - previene hongos)\n**Total ciclo:** 400-600 mm\n\n**Etapas críticas:**\n• Trasplante: riego abundante para establecimiento\n• Floración: mantener constante (evita caída de flores)\n• Fructificación: aumentar cantidad gradualmente\n\n**Importante:** Suspende riego 7-10 días antes de cosecha para concentrar sabor.\n\n¿Tienes algún problema con tu cultivo de tomate?"
+      ],
+      "context": "irrigation_specific"
+    },
+    {
+      "tag": "fertilization_npk",
+      "patterns": [
+        "qué es npk",
+        "fertilizante npk",
+        "números en el fertilizante",
+        "15-15-15 qué significa",
+        "tipos de fertilizante"
+      ],
+      "responses": [
+        "**NPK** son los macronutrientes esenciales:\n\n🟢 **N (Nitrógeno):** Crecimiento vegetativo, hojas verdes\n🔵 **P (Fósforo):** Raíces, floración, energía\n🔴 **K (Potasio):** Frutos, resistencia a enfermedades\n\n**Ejemplos de uso:**\n• NPK 20-10-10 → Alto N para crecimiento vegetativo\n• NPK 10-20-20 → Alto P y K para floración/fructificación\n• NPK 15-15-15 → Balanceado para uso general\n\n**Consejo:** Ajusta según etapa del cultivo. Más N al inicio, más P y K en floración y frutos.\n\n¿Necesitas recomendación para algún cultivo específico?"
+      ],
+      "context": "fertilization"
+    },
+    {
+      "tag": "fertilization_organic",
+      "patterns": [
+        "fertilizante orgánico",
+        "abono natural",
+        "compost",
+        "estiércol",
+        "humus de lombriz",
+        "fertilización ecológica"
+      ],
+      "responses": [
+        "Excelente opción! **Fertilización orgánica:**\n\n**Principales opciones:**\n1. **Compost:** 20-40 ton/ha, mejora estructura del suelo\n2. **Humus de lombriz:** 5-10 ton/ha, rico en microorganismos\n3. **Estiércol maduro:** 20-30 ton/ha (NUNCA fresco - quema raíces)\n4. **Guano:** Alto en P, 2-5 ton/ha\n5. **Bocashi:** Fermentado, aplicación directa\n\n**Ventajas:**\n✓ Mejora estructura del suelo\n✓ Aporta microorganismos beneficiosos\n✓ Liberación lenta de nutrientes\n✓ Aumenta retención de agua\n\n**Aplicación:** Incorporar 2-4 semanas antes de siembra.\n\n¿Te interesa algún fertilizante orgánico en particular?"
+      ],
+      "context": "fertilization_organic"
+    },
+    {
+      "tag": "pest_aphids",
+      "patterns": [
+        "pulgones",
+        "áfidos",
+        "insectos verdes pequeños",
+        "mis plantas tienen bichitos verdes",
+        "aphids",
+        "hojas pegajosas"
+      ],
+      "responses": [
+        "Son **pulgones (áfidos)**, insectos chupadores muy comunes.\n\n**Control orgánico (recomendado):**\n1. **Jabón potásico 2%:** Aplicar 2-3 veces cada 5 días\n2. **Aceite de neem 1%:** Insecticida y repelente\n3. **Agua a presión:** Desaloja las colonias\n4. **Mariquitas:** Control biológico natural (1 mariquita come 50-100 áfidos/día)\n\n**Control químico:**\n• Imidacloprid (sistémico)\n• Piretrinas naturales\n\n**Prevención:**\n• Plantas trampa (capuchinas)\n• Evitar exceso de nitrógeno\n• Trampas amarillas adhesivas\n\n¿Qué cultivo está afectado?"
+      ],
+      "context": "pest_control"
+    },
+    {
+      "tag": "pest_whitefly",
+      "patterns": [
+        "mosca blanca",
+        "mosquita blanca",
+        "nubes de insectos blancos",
+        "whitefly",
+        "bemisia"
+      ],
+      "responses": [
+        "**Mosca blanca** es una plaga seria, transmite virus.\n\n**Control integrado:**\n\n**Orgánico:**\n1. Jabón potásico + aceite de neem (MUY efectivo)\n2. Trampas amarillas adhesivas (monitoreo y captura)\n3. Encarsia formosa (parasitoide) - control biológico profesional\n4. Aspirar manualmente en invernaderos pequeños\n\n**Químico:**\n• Spiromesifen (específico para mosca blanca)\n• Imidacloprid sistémico\n\n**Muy importante:**\n✓ Aplicar TAMBIÉN en envés de hojas\n✓ Tratar TODAS las plantas al mismo tiempo\n✓ Repetir cada 5-7 días (ciclo de vida)\n\n**Prevención:** Mallas antiinsectos 0.5mm, eliminar malezas.\n\n¿Es en invernadero o campo abierto?"
+      ],
+      "context": "pest_control"
+    },
+    {
+      "tag": "soil_preparation",
+      "patterns": [
+        "preparar el suelo",
+        "cómo preparar la tierra",
+        "preparación del terreno",
+        "labrar",
+        "arar"
+      ],
+      "responses": [
+        "**Preparación del suelo - pasos esenciales:**\n\n1. **Análisis de suelo:** pH, nutrientes, textura (muy recomendado)\n\n2. **Limpieza:** Eliminar restos del cultivo anterior, piedras, malezas\n\n3. **Labranza:**\n   • Arado: 25-30 cm profundidad\n   • Rastra: desmenuzar terrones\n   • Nivelar: pendiente leve para drenaje\n\n4. **Enmiendas (según análisis):**\n   • Cal agrícola si pH <5.5\n   • Azufre si pH >7.5\n   • Yeso para suelos sódicos\n\n5. **Materia orgánica:** Compost 20-40 ton/ha, incorporar 2-4 semanas antes\n\n6. **Fertilización de fondo:** Fósforo (lenta movilidad)\n\n7. **Desinfección (si hubo enfermedades):** Solarización, biofumigación\n\n**Consejo:** No trabajes suelo muy húmedo (compactación) ni muy seco (polvo).\n\n¿Para qué cultivo vas a preparar?"
+      ],
+      "context": "soil_management"
+    },
+    {
+      "tag": "planting_time",
+      "patterns": [
+        "cuándo sembrar",
+        "época de siembra",
+        "mejor momento para plantar",
+        "cuándo plantar",
+        "calendario de siembra"
+      ],
+      "responses": [
+        "La **época de siembra** depende del cultivo y tu clima:\n\n**Primavera (Septiembre-Noviembre):**\n• Tomate, pimiento, pepino, calabaza, maíz\n• Cultivos de clima cálido\n\n**Otoño (Marzo-Mayo):**\n• Lechuga, zanahoria, cebolla, ajo, brócoli\n• Cultivos de clima fresco\n\n**Invierno (Junio-Agosto):**\n• Habas, arvejas, espinaca\n• Cultivos muy resistentes al frío\n\n**Verano (Diciembre-Febrero):**\n• Papa (zona sur), lechuga (zonas frescas)\n\n**Factores a considerar:**\n✓ Última helada de primavera\n✓ Primera helada de otoño\n✓ Temperatura del suelo (>10°C para germinación)\n✓ Disponibilidad de agua\n\n¿Qué cultivo te interesa sembrar?"
+      ],
+      "context": "planting"
+    },
+    {
+      "tag": "harvest_indicators",
+      "patterns": [
+        "cuándo cosechar",
+        "cómo saber si está listo",
+        "punto de cosecha",
+        "madurez del fruto",
+        "tiempo de cosecha"
+      ],
+      "responses": [
+        "**Indicadores de cosecha** por cultivo:\n\n**Tomate:**\n• Color rojo uniforme (o según variedad)\n• Firmeza al tacto\n• Se desprende fácilmente\n\n**Lechuga:**\n• Cabeza compacta y firme\n• Antes de elongación del tallo\n\n**Zanahoria:**\n• Diámetro superior 2.5-4 cm\n• Color naranja intenso\n\n**Papa:**\n• 70-80% del follaje seco y amarillo\n• Piel firme, no se desprende\n\n**Pimiento:**\n• Color desarrollado (verde, rojo, amarillo)\n• Firme y brillante\n\n**Cebolla:**\n• Caída del follaje (70-80%)\n• Cuello seco\n\n**Consejo general:** Cosecha en horas frescas (temprano en mañana). Maneja con cuidado para evitar daños.\n\n¿Qué cultivo vas a cosechar?"
+      ],
+      "context": "harvest"
+    },
+    {
+      "tag": "greenhouse_vs_field",
+      "patterns": [
+        "invernadero o campo",
+        "diferencia invernadero",
+        "ventajas invernadero",
+        "cultivar en invernadero",
+        "cultivo protegido"
+      ],
+      "responses": [
+        "**Invernadero vs Campo Abierto:**\n\n**Ventajas del invernadero:**\n✓ Control de temperatura y humedad\n✓ Protección contra heladas, granizo, viento\n✓ Mayor rendimiento (2-5x más)\n✓ Producción fuera de temporada\n✓ Menos plagas y enfermedades\n✓ Uso eficiente del agua (30-50% menos)\n\n**Desventajas:**\n✗ Inversión inicial alta ($15-50/m²)\n✗ Costos de mantenimiento\n✗ Requiere más conocimiento técnico\n✗ Polinización manual en algunos cultivos\n\n**Campo abierto:**\n✓ Menor inversión inicial\n✓ Polinización natural\n✓ Más simple de manejar\n✗ Dependiente del clima\n✗ Menor rendimiento\n\n**Recomendación:** Invernadero para tomate, pimiento, pepino, fresa. Campo para maíz, papa, zanahoria.\n\n¿Qué cultivo estás considerando?"
+      ],
+      "context": "production_systems"
+    },
+    {
+      "tag": "product_recommendation",
+      "patterns": [
+        "qué producto usar",
+        "recomiéndame un producto",
+        "dónde comprar",
+        "qué fertilizante comprar",
+        "qué fungicida usar"
+      ],
+      "responses": [
+        "Con gusto te ayudo a encontrar productos. ¿Qué tipo de producto necesitas?\n\n**Categorías disponibles:**\n1. 🌱 Fertilizantes (NPK, orgánicos, micronutrientes)\n2. 🍄 Fungicidas (preventivos, curativos)\n3. 🐛 Insecticidas (orgánicos, químicos)\n4. 🌿 Herbicidas\n5. 🌾 Semillas\n6. 🔧 Equipamiento (riego, herramientas)\n\nTambién puedes visitar nuestro **Marketplace** para ver el catálogo completo con precios y comparar opciones.\n\n¿Qué tipo de producto te interesa?"
+      ],
+      "context": "product_search"
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "gracias",
+        "muchas gracias",
+        "perfecto gracias",
+        "ok gracias",
+        "excelente gracias"
+      ],
+      "responses": [
+        "¡De nada! Estoy aquí para ayudarte. Si tienes más preguntas sobre tus cultivos, no dudes en consultarme. 🌱",
+        "¡Un placer ayudarte! Que tengas éxito con tus cultivos. Si necesitas algo más, aquí estaré. 😊"
+      ],
+      "context": ""
+    }
+  ]
+}
