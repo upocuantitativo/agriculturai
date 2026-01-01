@@ -239,7 +239,215 @@ window.initMarketplace = function() {
             }
         };
 
+        // === ADMINISTRACIÓN DE PRODUCTOS ===
+
+        const manageProductsBtn = document.getElementById('manage-products-btn');
+        const productAdminModal = new bootstrap.Modal(document.getElementById('productAdminModal'));
+        const productForm = document.getElementById('product-form');
+        const productsList = document.getElementById('products-admin-list');
+        const exportBtn = document.getElementById('export-products-btn');
+        const resetFormBtn = document.getElementById('reset-form-btn');
+
+        // Abrir modal de administración
+        if (manageProductsBtn) {
+            manageProductsBtn.addEventListener('click', () => {
+                productAdminModal.show();
+                loadProductsAdmin();
+            });
+        }
+
+        // Cargar productos en tabla de administración
+        function loadProductsAdmin() {
+            if (!productsList) return;
+
+            productsList.innerHTML = '';
+
+            if (allProducts.length === 0) {
+                productsList.innerHTML = '<tr><td colspan="5" class="text-center">No hay productos</td></tr>';
+                return;
+            }
+
+            allProducts.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><code>${product.id}</code></td>
+                    <td>${product.name}</td>
+                    <td><span class="badge bg-${getCategoryColor(product.category)}">${formatCategory(product.category)}</span></td>
+                    <td>${product.brand}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary edit-product-btn" data-id="${product.id}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-product-btn" data-id="${product.id}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                `;
+                productsList.appendChild(row);
+            });
+
+            // Event listeners para editar
+            document.querySelectorAll('.edit-product-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const productId = btn.dataset.id;
+                    editProduct(productId);
+                });
+            });
+
+            // Event listeners para eliminar
+            document.querySelectorAll('.delete-product-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const productId = btn.dataset.id;
+                    deleteProduct(productId);
+                });
+            });
+        }
+
+        // Editar producto
+        function editProduct(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            // Llenar formulario
+            document.getElementById('edit-product-id').value = product.id;
+            document.getElementById('product-id').value = product.id;
+            document.getElementById('product-id').disabled = true; // No cambiar ID al editar
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-category').value = product.category;
+            document.getElementById('product-brand').value = product.brand;
+            document.getElementById('product-unit').value = product.unit;
+            document.getElementById('product-description').value = product.description;
+            document.getElementById('product-active-ingredient').value = product.activeIngredient;
+            document.getElementById('product-dosage').value = product.dosage || '';
+            document.getElementById('product-safety-interval').value = product.safetyInterval || '';
+            document.getElementById('product-compatible-crops').value = product.compatibleCrops ? product.compatibleCrops.join(', ') : '';
+            document.getElementById('product-target-diseases').value = product.targetDiseases ? product.targetDiseases.join(', ') : '';
+            document.getElementById('product-certification').checked = product.certification || false;
+
+            // Cambiar a tab de formulario
+            const addTab = document.getElementById('add-tab');
+            if (addTab) {
+                const tab = new bootstrap.Tab(addTab);
+                tab.show();
+            }
+        }
+
+        // Eliminar producto
+        function deleteProduct(productId) {
+            if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+
+            const index = allProducts.findIndex(p => p.id === productId);
+            if (index > -1) {
+                allProducts.splice(index, 1);
+                saveProductsToStorage();
+                loadProductsAdmin();
+                displayProducts(allProducts);
+                filteredProducts = [...allProducts];
+                alert('Producto eliminado correctamente');
+            }
+        }
+
+        // Guardar productos en localStorage
+        function saveProductsToStorage() {
+            window.utils.storage.set('customProducts', allProducts);
+        }
+
+        // Cargar productos personalizados al inicio
+        function loadCustomProducts() {
+            const customProducts = window.utils.storage.get('customProducts');
+            if (customProducts && Array.isArray(customProducts)) {
+                allProducts = customProducts;
+            }
+        }
+
+        // Formulario agregar/editar producto
+        if (productForm) {
+            productForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const editId = document.getElementById('edit-product-id').value;
+                const isEditing = !!editId;
+
+                const productData = {
+                    id: document.getElementById('product-id').value.trim(),
+                    name: document.getElementById('product-name').value.trim(),
+                    category: document.getElementById('product-category').value,
+                    brand: document.getElementById('product-brand').value.trim(),
+                    unit: document.getElementById('product-unit').value.trim(),
+                    description: document.getElementById('product-description').value.trim(),
+                    activeIngredient: document.getElementById('product-active-ingredient').value.trim(),
+                    dosage: document.getElementById('product-dosage').value.trim(),
+                    safetyInterval: document.getElementById('product-safety-interval').value.trim(),
+                    compatibleCrops: document.getElementById('product-compatible-crops').value.split(',').map(c => c.trim()).filter(c => c),
+                    targetDiseases: document.getElementById('product-target-diseases').value.split(',').map(d => d.trim()).filter(d => d),
+                    certification: document.getElementById('product-certification').checked
+                };
+
+                if (isEditing) {
+                    // Actualizar producto existente
+                    const index = allProducts.findIndex(p => p.id === editId);
+                    if (index > -1) {
+                        allProducts[index] = productData;
+                        alert('Producto actualizado correctamente');
+                    }
+                } else {
+                    // Verificar que no exista el ID
+                    if (allProducts.find(p => p.id === productData.id)) {
+                        alert('Ya existe un producto con ese ID');
+                        return;
+                    }
+                    // Agregar nuevo producto
+                    allProducts.push(productData);
+                    alert('Producto agregado correctamente');
+                }
+
+                saveProductsToStorage();
+                loadProductsAdmin();
+                displayProducts(allProducts);
+                filteredProducts = [...allProducts];
+                productForm.reset();
+                document.getElementById('edit-product-id').value = '';
+                document.getElementById('product-id').disabled = false;
+
+                // Volver a tab de lista
+                const listTab = document.getElementById('list-tab');
+                if (listTab) {
+                    const tab = new bootstrap.Tab(listTab);
+                    tab.show();
+                }
+            });
+        }
+
+        // Resetear formulario
+        if (resetFormBtn) {
+            resetFormBtn.addEventListener('click', () => {
+                productForm.reset();
+                document.getElementById('edit-product-id').value = '';
+                document.getElementById('product-id').disabled = false;
+            });
+        }
+
+        // Exportar productos a JSON
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                const jsonData = {
+                    products: allProducts
+                };
+
+                const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'products-catalog.json';
+                a.click();
+                URL.revokeObjectURL(url);
+
+                alert('JSON exportado. Copia este archivo a data/products-catalog.json para hacer los cambios permanentes.');
+            });
+        }
+
         // Inicializar
+        loadCustomProducts(); // Cargar productos personalizados primero
         loadProducts();
 
         console.log('=== initMarketplace completado ===');

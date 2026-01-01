@@ -1,12 +1,21 @@
 <!-- Página de Marketplace / Productos Agrícolas -->
 <div class="container content-section">
-    <h1 class="section-title text-center">
-        <i class="bi bi-shop me-2"></i>
-        Productos Agrícolas
-    </h1>
-    <p class="text-center text-muted mb-4">
-        Encuentra fertilizantes, fungicidas, insecticidas y más para tus cultivos
-    </p>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="flex-grow-1">
+            <h1 class="section-title text-center">
+                <i class="bi bi-shop me-2"></i>
+                Productos Agrícolas
+            </h1>
+            <p class="text-center text-muted mb-4">
+                Encuentra fertilizantes, fungicidas, insecticidas y más para tus cultivos
+            </p>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-primary" id="manage-products-btn" title="Administrar Productos">
+                <i class="bi bi-gear-fill"></i> Administrar
+            </button>
+        </div>
+    </div>
 
     <!-- Sección de productos recomendados (se muestra si hay diagnóstico) -->
     <div id="recommended-section" style="display: none;">
@@ -69,6 +78,162 @@
                 <span class="visually-hidden">Cargando productos...</span>
             </div>
             <p class="mt-2 text-muted">Cargando catálogo de productos...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Administración de Productos -->
+<div class="modal fade" id="productAdminModal" tabindex="-1" aria-labelledby="productAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productAdminModalLabel">
+                    <i class="bi bi-gear-fill me-2"></i>
+                    Administración de Productos
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Tabs -->
+                <ul class="nav nav-tabs mb-3" id="adminTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="list-tab" data-bs-toggle="tab" data-bs-target="#list-panel" type="button" role="tab">
+                            <i class="bi bi-list-ul"></i> Lista de Productos
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-panel" type="button" role="tab">
+                            <i class="bi bi-plus-circle"></i> Agregar Nuevo
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="adminTabsContent">
+                    <!-- Lista de productos -->
+                    <div class="tab-pane fade show active" id="list-panel" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Categoría</th>
+                                        <th>Marca</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="products-admin-list">
+                                    <tr>
+                                        <td colspan="5" class="text-center">Cargando...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Formulario agregar/editar -->
+                    <div class="tab-pane fade" id="add-panel" role="tabpanel">
+                        <form id="product-form">
+                            <input type="hidden" id="edit-product-id">
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="product-id" class="form-label">ID del Producto*</label>
+                                    <input type="text" class="form-control" id="product-id" required>
+                                    <small class="text-muted">Ejemplo: p013</small>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="product-name" class="form-label">Nombre del Producto*</label>
+                                    <input type="text" class="form-control" id="product-name" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="product-category" class="form-label">Categoría*</label>
+                                    <select class="form-select" id="product-category" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="fertilizantes">Fertilizantes</option>
+                                        <option value="fungicidas">Fungicidas</option>
+                                        <option value="insecticidas">Insecticidas</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="product-brand" class="form-label">Marca*</label>
+                                    <input type="text" class="form-control" id="product-brand" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="product-unit" class="form-label">Presentación*</label>
+                                    <input type="text" class="form-control" id="product-unit" placeholder="Ej: 1 kg" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="product-description" class="form-label">Descripción*</label>
+                                    <textarea class="form-control" id="product-description" rows="2" required></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="product-active-ingredient" class="form-label">Ingrediente Activo*</label>
+                                    <input type="text" class="form-control" id="product-active-ingredient" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="product-dosage" class="form-label">Dosificación</label>
+                                    <input type="text" class="form-control" id="product-dosage">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="product-safety-interval" class="form-label">Intervalo de Seguridad</label>
+                                    <input type="text" class="form-control" id="product-safety-interval">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="product-compatible-crops" class="form-label">Cultivos Compatibles</label>
+                                    <input type="text" class="form-control" id="product-compatible-crops" placeholder="Separados por comas">
+                                    <small class="text-muted">Ejemplo: tomate, papa, pimiento</small>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="product-target-diseases" class="form-label">Enfermedades Objetivo</label>
+                                    <input type="text" class="form-control" id="product-target-diseases" placeholder="Separados por comas">
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="product-certification">
+                                        <label class="form-check-label" for="product-certification">
+                                            Producto certificado ecológico
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Guardar Producto
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="reset-form-btn">
+                                    <i class="bi bi-x-circle"></i> Limpiar
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="alert alert-info mt-3">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>Nota:</strong> Los productos se guardan temporalmente en el navegador. Para hacerlos permanentes,
+                            copia el JSON generado y actualiza el archivo <code>data/products-catalog.json</code> en el repositorio.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="export-products-btn">
+                    <i class="bi bi-download"></i> Exportar JSON
+                </button>
+            </div>
         </div>
     </div>
 </div>
