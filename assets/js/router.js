@@ -5,13 +5,17 @@
 
 class Router {
     constructor() {
+        // Detectar base path (para GitHub Pages)
+        const base = document.querySelector('base');
+        this.basePath = base ? base.getAttribute('href') : '/';
+
         this.routes = {
-            '/': 'pages/home.html',
-            '/diagnosis': 'pages/diagnosis.html',
-            '/crops': 'pages/crops.html',
-            '/chat': 'pages/chat.html',
-            '/marketplace': 'pages/marketplace.html',
-            '/orders': 'pages/orders.html'
+            '': 'pages/home.html',
+            'diagnosis': 'pages/diagnosis.html',
+            'crops': 'pages/crops.html',
+            'chat': 'pages/chat.html',
+            'marketplace': 'pages/marketplace.html',
+            'orders': 'pages/orders.html'
         };
 
         this.contentDiv = document.getElementById('app-content');
@@ -46,11 +50,20 @@ class Router {
     }
 
     async loadRoute() {
-        const path = window.location.pathname;
+        let path = window.location.pathname;
+
+        // Remover base path si existe
+        if (this.basePath !== '/' && path.startsWith(this.basePath)) {
+            path = path.substring(this.basePath.length);
+        }
+
+        // Remover slash inicial y final
+        path = path.replace(/^\/+|\/+$/g, '');
+
         this.currentPath = path;
 
         // Encontrar la ruta correspondiente
-        const route = this.routes[path] || this.routes['/'];
+        const route = this.routes[path] || this.routes[''];
 
         // Mostrar loading
         window.utils.showLoading();
@@ -99,8 +112,11 @@ class Router {
             link.classList.remove('active');
         });
 
+        // Normalizar el path del link para comparación
+        const linkPath = path === '' ? '/' : `/${path}`;
+
         // Agregar clase active al link actual
-        const activeLink = document.querySelector(`.nav-link[href="${path}"]`);
+        const activeLink = document.querySelector(`.nav-link[href="${linkPath}"]`);
         if (activeLink) {
             activeLink.classList.add('active');
         }
@@ -109,12 +125,12 @@ class Router {
     executePageScripts(path) {
         // Mapeo de rutas a funciones de inicialización
         const scriptMap = {
-            '/': 'initHome',
-            '/diagnosis': 'initDiagnosis',
-            '/crops': 'initCrops',
-            '/chat': 'initChat',
-            '/marketplace': 'initMarketplace',
-            '/orders': 'initOrders'
+            '': 'initHome',
+            'diagnosis': 'initDiagnosis',
+            'crops': 'initCrops',
+            'chat': 'initChat',
+            'marketplace': 'initMarketplace',
+            'orders': 'initOrders'
         };
 
         const initFunction = scriptMap[path];
