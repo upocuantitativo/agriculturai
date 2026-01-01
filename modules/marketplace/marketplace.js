@@ -446,6 +446,34 @@ window.initMarketplace = function() {
             });
         }
 
+        // Búsqueda en Greenbook
+        const searchGreenbookBtn = document.getElementById('search-greenbook-btn');
+        if (searchGreenbookBtn && window.GreenbookAPI) {
+            searchGreenbookBtn.addEventListener('click', () => {
+                window.GreenbookAPI.showProductSearchDialog((productData) => {
+                    // Callback cuando el usuario acepta un producto de Greenbook
+                    console.log('Producto de Greenbook seleccionado:', productData);
+
+                    // Verificar que no exista el ID
+                    if (allProducts.find(p => p.id === productData.id)) {
+                        // Generar nuevo ID único
+                        const timestamp = Date.now();
+                        productData.id = `gb-${timestamp}`;
+                    }
+
+                    // Agregar a la base de datos
+                    allProducts.push(productData);
+                    saveProductsToStorage();
+                    loadProductsAdmin();
+                    displayProducts(allProducts);
+                    filteredProducts = [...allProducts];
+
+                    // Mostrar confirmación
+                    alert(`Producto "${productData.name}" agregado correctamente desde Greenbook.\n\nEl producto está guardado temporalmente. Exporta el JSON para hacerlo permanente.`);
+                });
+            });
+        }
+
         // Inicializar
         loadCustomProducts(); // Cargar productos personalizados primero
         loadProducts();
