@@ -3,6 +3,42 @@
  * Maneja la carga de imágenes y análisis de plantas
  */
 
+// Mapeo de enfermedades a productos recomendados
+const diseaseToProducts = {
+    'Tizón tardío': ['p002', 'p006'], // Fungicida Cúprico, Mancozeb
+    'Tizón tardío (Phytophthora infestans)': ['p002', 'p006'],
+    'Tizón temprano': ['p002', 'p006'],
+    'Mildiu velloso': ['p002', 'p006'], // Fungicida Cúprico, Mancozeb
+    'Oídio': ['p011'], // Azufre Mojable
+    'Antracnosis': ['p002', 'p006'],
+    'Mancha bacteriana': ['p002'], // Fungicida Cúprico (bactericida)
+    'Pulgones': ['p003', 'p005'], // Jabón Potásico, Neem
+    'Mosca blanca': ['p003', 'p005'],
+    'Ácaros': ['p005', 'p011'], // Neem, Azufre
+    'Araña roja': ['p005', 'p011'],
+    'Gusanos': ['p008'], // Bacillus thuringiensis
+    'Larvas': ['p008'],
+    'Planta sana': ['p001', 'p007', 'p012'] // Fertilizantes para mantenimiento
+};
+
+// Función para obtener productos recomendados según enfermedad
+function getRecommendedProducts(diseaseName) {
+    console.log('Buscando productos para:', diseaseName);
+
+    // Buscar coincidencia exacta o parcial
+    for (const [disease, products] of Object.entries(diseaseToProducts)) {
+        if (diseaseName.toLowerCase().includes(disease.toLowerCase()) ||
+            disease.toLowerCase().includes(diseaseName.toLowerCase())) {
+            console.log('Productos recomendados:', products);
+            return products;
+        }
+    }
+
+    // Si no hay coincidencia, recomendar productos generales
+    console.log('Sin coincidencia, productos generales');
+    return ['p001', 'p007']; // Fertilizante NPK y Compost
+}
+
 // Función de inicialización de la página de diagnóstico
 window.initDiagnosis = function() {
     console.log('=== INICIO initDiagnosis ===');
@@ -144,6 +180,20 @@ window.initDiagnosis = function() {
                 ];
 
                 displayResults(mockResults);
+
+                // Guardar diagnóstico para recomendaciones de productos
+                const topDiagnosis = mockResults[0]; // El de mayor confianza
+                const diagnosisData = {
+                    disease: topDiagnosis.disease,
+                    confidence: topDiagnosis.confidence,
+                    timestamp: new Date().toISOString(),
+                    recommendedProducts: getRecommendedProducts(topDiagnosis.disease)
+                };
+
+                if (window.utils && window.utils.storage) {
+                    window.utils.storage.set('lastDiagnosis', diagnosisData);
+                    console.log('Diagnóstico guardado:', diagnosisData);
+                }
 
                 previewArea.style.display = 'none';
                 resultsArea.style.display = 'block';

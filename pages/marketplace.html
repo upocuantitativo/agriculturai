@@ -5,14 +5,32 @@
         Productos Agrícolas
     </h1>
     <p class="text-center text-muted mb-4">
-        Encuentra fertilizantes, fungicidas, insecticidas y más. Compara precios y realiza pedidos
+        Encuentra fertilizantes, fungicidas, insecticidas y más para tus cultivos
     </p>
+
+    <!-- Sección de productos recomendados (se muestra si hay diagnóstico) -->
+    <div id="recommended-section" style="display: none;">
+        <div class="mb-4" id="disease-info">
+            <!-- La información de la enfermedad se inyectará aquí -->
+        </div>
+
+        <h3 class="mb-3">
+            <i class="bi bi-star-fill text-warning me-2"></i>
+            Productos Recomendados
+        </h3>
+        <div class="row mb-5" id="recommended-products">
+            <!-- Productos recomendados se cargarán aquí -->
+        </div>
+
+        <hr class="my-4">
+        <h3 class="mb-3">Todos los Productos</h3>
+    </div>
 
     <!-- Filtros y búsqueda -->
     <div class="card mb-4">
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-text">
                             <i class="bi bi-search"></i>
@@ -21,27 +39,16 @@
                             type="text"
                             class="form-control"
                             id="search-products"
-                            placeholder="Buscar productos..."
+                            placeholder="Buscar productos por nombre, ingrediente activo..."
                         >
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <select class="form-select" id="category-filter">
-                        <option value="">Todas las categorías</option>
+                        <option value="all">Todas las categorías</option>
                         <option value="fertilizantes">Fertilizantes</option>
                         <option value="fungicidas">Fungicidas</option>
                         <option value="insecticidas">Insecticidas</option>
-                        <option value="herbicidas">Herbicidas</option>
-                        <option value="semillas">Semillas</option>
-                        <option value="equipamiento">Equipamiento</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select" id="sort-products">
-                        <option value="relevance">Relevancia</option>
-                        <option value="price-asc">Menor precio</option>
-                        <option value="price-desc">Mayor precio</option>
-                        <option value="name">Nombre A-Z</option>
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -54,258 +61,72 @@
         </div>
     </div>
 
-    <!-- Productos -->
-    <div class="row" id="products-grid">
-        <!-- Los productos se cargarán aquí -->
-    </div>
-
-    <!-- Estado vacío -->
-    <div id="empty-products" style="display: none;">
-        <div class="empty-state">
-            <div class="empty-state-icon">
-                <i class="bi bi-inbox"></i>
+    <!-- Catálogo de productos -->
+    <div class="row" id="products-container">
+        <!-- Los productos se cargarán dinámicamente aquí -->
+        <div class="col-12 text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando productos...</span>
             </div>
-            <h3>No se encontraron productos</h3>
-            <p>Intenta con otros términos de búsqueda o categoría</p>
-            <button type="button" class="btn btn-primary" id="reset-search">
-                Ver todos los productos
-            </button>
+            <p class="mt-2 text-muted">Cargando catálogo de productos...</p>
         </div>
     </div>
 </div>
 
-<script>
-window.initMarketplace = function() {
-    console.log('Página de marketplace cargada');
+<style>
+/* Estilos para productos recomendados */
+.recommended-product {
+    border: 2px solid #ffc107 !important;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2) !important;
+    position: relative;
+}
 
-    const productsGrid = document.getElementById('products-grid');
-    const emptyState = document.getElementById('empty-products');
-    const searchInput = document.getElementById('search-products');
-    const categoryFilter = document.getElementById('category-filter');
-    const sortSelect = document.getElementById('sort-products');
-    const resetFiltersBtn = document.getElementById('reset-filters');
-    const resetSearchBtn = document.getElementById('reset-search');
+.recommended-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
 
-    // Catálogo de productos (en producción vendría de Supabase o API)
-    const products = [
-        {
-            id: 'p001',
-            name: 'Fertilizante NPK 15-15-15',
-            category: 'fertilizantes',
-            price: 12500,
-            unit: '1 kg',
-            description: 'Fertilizante balanceado para todas las etapas del cultivo',
-            supplier: 'AgroFertil SpA',
-            image: 'https://via.placeholder.com/300x200/28a745/ffffff?text=NPK+15-15-15'
-        },
-        {
-            id: 'p002',
-            name: 'Fungicida Cúprico',
-            category: 'fungicidas',
-            price: 15000,
-            unit: '500g',
-            description: 'Oxicloruro de cobre 50%. Preventivo y curativo para tizón',
-            supplier: 'FitoProtec Ltda',
-            image: 'https://via.placeholder.com/300x200/7cb342/ffffff?text=Fungicida+Cu'
-        },
-        {
-            id: 'p003',
-            name: 'Jabón Potásico Orgánico',
-            category: 'insecticidas',
-            price: 8500,
-            unit: '1L',
-            description: 'Insecticida ecológico contra pulgones y mosca blanca',
-            supplier: 'EcoAgro Chile',
-            image: 'https://via.placeholder.com/300x200/8d6e63/ffffff?text=Jabón+Potásico'
-        },
-        {
-            id: 'p004',
-            name: 'Urea (46-0-0)',
-            category: 'fertilizantes',
-            price: 18000,
-            unit: '5 kg',
-            description: 'Alta concentración de nitrógeno para crecimiento vegetativo',
-            supplier: 'NutriCrop SA',
-            image: 'https://via.placeholder.com/300x200/28a745/ffffff?text=Urea+46-0-0'
-        },
-        {
-            id: 'p005',
-            name: 'Aceite de Neem',
-            category: 'insecticidas',
-            price: 11000,
-            unit: '500ml',
-            description: 'Insecticida y fungicida natural de amplio espectro',
-            supplier: 'BioVerde Ltda',
-            image: 'https://via.placeholder.com/300x200/8d6e63/ffffff?text=Aceite+Neem'
-        },
-        {
-            id: 'p006',
-            name: 'Mancozeb 80%',
-            category: 'fungicidas',
-            price: 13500,
-            unit: '1 kg',
-            description: 'Fungicida preventivo de amplio espectro',
-            supplier: 'FitoProtec Ltda',
-            image: 'https://via.placeholder.com/300x200/7cb342/ffffff?text=Mancozeb'
-        },
-        {
-            id: 'p007',
-            name: 'Compost Orgánico',
-            category: 'fertilizantes',
-            price: 5500,
-            unit: '10 kg',
-            description: 'Mejora estructura del suelo y aporta nutrientes',
-            supplier: 'Terra Fértil',
-            image: 'https://via.placeholder.com/300x200/28a745/ffffff?text=Compost'
-        },
-        {
-            id: 'p008',
-            name: 'Bacillus Thuringiensis (Bt)',
-            category: 'insecticidas',
-            price: 9500,
-            unit: '250g',
-            description: 'Control biológico de larvas y gusanos',
-            supplier: 'BioControl SA',
-            image: 'https://via.placeholder.com/300x200/8d6e63/ffffff?text=Bt+Control'
-        }
-    ];
+.product-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e0e0e0;
+}
 
-    let filteredProducts = [...products];
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
 
-    // Renderizar productos
-    const renderProducts = () => {
-        if (filteredProducts.length === 0) {
-            productsGrid.innerHTML = '';
-            productsGrid.parentElement.classList.add('d-none');
-            emptyState.style.display = 'block';
-            return;
-        }
+.confidence-bar {
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
 
-        productsGrid.parentElement.classList.remove('d-none');
-        emptyState.style.display = 'none';
-        productsGrid.innerHTML = '';
+.confidence-fill {
+    height: 100%;
+    transition: width 0.5s ease;
+}
 
-        filteredProducts.forEach(product => {
-            const col = document.createElement('div');
-            col.className = 'col-md-6 col-lg-4 col-xl-3 mb-4';
+.confidence-fill.confidence-high {
+    background: linear-gradient(90deg, #28a745, #20c997);
+}
 
-            col.innerHTML = `
-                <div class="card product-card h-100">
-                    <div class="position-relative">
-                        <img src="${product.image}" class="card-img-top product-image" alt="${product.name}">
-                        <span class="product-badge">${product.category}</span>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="card-title">${product.name}</h6>
-                        <p class="text-muted small mb-2">${product.supplier}</p>
-                        <p class="card-text small flex-grow-1">${product.description}</p>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="product-price">${window.utils.formatCurrency(product.price)}</span>
-                                <span class="text-muted small">${product.unit}</span>
-                            </div>
-                            <button class="btn btn-primary w-100 btn-sm add-to-cart" data-product-id="${product.id}">
-                                <i class="bi bi-cart-plus me-1"></i>
-                                Agregar al Carrito
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
+.confidence-fill.confidence-medium {
+    background: linear-gradient(90deg, #ffc107, #fd7e14);
+}
 
-            productsGrid.appendChild(col);
-        });
-
-        // Agregar event listeners a botones
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const productId = e.currentTarget.dataset.productId;
-                addToCart(productId);
-            });
-        });
-    };
-
-    // Agregar al carrito
-    const addToCart = (productId) => {
-        const product = products.find(p => p.id === productId);
-        if (!product) return;
-
-        let cart = window.utils.storage.get('shoppingCart') || [];
-        const existingItem = cart.find(item => item.id === productId);
-
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                unit: product.unit,
-                supplier: product.supplier,
-                quantity: 1
-            });
-        }
-
-        window.utils.storage.set('shoppingCart', cart);
-
-        // Disparar evento de actualización del carrito
-        const event = new CustomEvent('cartUpdated', {
-            detail: { items: cart }
-        });
-        window.dispatchEvent(event);
-
-        window.utils.showToast(`${product.name} agregado al carrito`, 'success');
-    };
-
-    // Filtrar y ordenar
-    const applyFilters = () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        const category = categoryFilter.value;
-        const sortBy = sortSelect.value;
-
-        filteredProducts = products.filter(p => {
-            const matchesSearch = p.name.toLowerCase().includes(searchTerm) ||
-                                  p.description.toLowerCase().includes(searchTerm);
-            const matchesCategory = !category || p.category === category;
-            return matchesSearch && matchesCategory;
-        });
-
-        // Ordenar
-        switch (sortBy) {
-            case 'price-asc':
-                filteredProducts.sort((a, b) => a.price - b.price);
-                break;
-            case 'price-desc':
-                filteredProducts.sort((a, b) => b.price - a.price);
-                break;
-            case 'name':
-                filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-                break;
-        }
-
-        renderProducts();
-    };
-
-    // Event listeners
-    searchInput.addEventListener('input', window.utils.debounce(applyFilters, 300));
-    categoryFilter.addEventListener('change', applyFilters);
-    sortSelect.addEventListener('change', applyFilters);
-
-    resetFiltersBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        categoryFilter.value = '';
-        sortSelect.value = 'relevance';
-        applyFilters();
-    });
-
-    resetSearchBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        categoryFilter.value = '';
-        sortSelect.value = 'relevance';
-        applyFilters();
-    });
-
-    // Renderizar productos iniciales
-    renderProducts();
-};
-</script>
+.confidence-fill.confidence-low {
+    background: linear-gradient(90deg, #6c757d, #adb5bd);
+}
+</style>
