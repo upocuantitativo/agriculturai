@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Diagnóstico - AgriculturaI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="mb-4">Test de Diagnóstico - Carga de Imagen</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <h3>Subir Imagen</h3>
+                <input type="file" id="testFileInput" accept="image/*" class="form-control mb-3">
+
+                <div id="testPreview" style="display: none;">
+                    <img id="testImage" src="" style="max-width: 100%; height: auto;">
+                    <button id="testAnalyze" class="btn btn-primary mt-3">Analizar</button>
+                </div>
+
+                <div id="testResults" style="display: none;" class="mt-3">
+                    <div class="alert alert-success">
+                        <h5>¡Imagen cargada exitosamente!</h5>
+                        <p id="testInfo"></p>
+                    </div>
+                </div>
+
+                <div id="testLog" class="mt-3">
+                    <h5>Log de eventos:</h5>
+                    <pre id="logContent" style="background: #f5f5f5; padding: 10px; border-radius: 5px;"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const logContent = document.getElementById('logContent');
+        const log = (msg) => {
+            const timestamp = new Date().toLocaleTimeString();
+            logContent.textContent += `[${timestamp}] ${msg}\n`;
+            console.log(msg);
+        };
+
+        log('Script iniciado');
+
+        const testFileInput = document.getElementById('testFileInput');
+        const testPreview = document.getElementById('testPreview');
+        const testImage = document.getElementById('testImage');
+        const testAnalyze = document.getElementById('testAnalyze');
+        const testResults = document.getElementById('testResults');
+        const testInfo = document.getElementById('testInfo');
+
+        log('Elementos obtenidos');
+
+        testFileInput.addEventListener('change', function(e) {
+            log('Evento change detectado');
+
+            const file = e.target.files[0];
+            if (!file) {
+                log('ERROR: No hay archivo');
+                return;
+            }
+
+            log(`Archivo seleccionado: ${file.name}`);
+            log(`Tipo: ${file.type}`);
+            log(`Tamaño: ${(file.size / 1024).toFixed(2)} KB`);
+
+            if (!file.type.match('image.*')) {
+                log('ERROR: No es una imagen');
+                alert('Por favor selecciona una imagen');
+                return;
+            }
+
+            log('Iniciando FileReader...');
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                log('FileReader onload ejecutado');
+                testImage.src = e.target.result;
+                testPreview.style.display = 'block';
+                log('Imagen mostrada en preview');
+            };
+
+            reader.onerror = function() {
+                log('ERROR en FileReader');
+            };
+
+            reader.readAsDataURL(file);
+            log('FileReader.readAsDataURL llamado');
+        });
+
+        testAnalyze.addEventListener('click', function() {
+            log('Botón analizar clickeado');
+            testAnalyze.disabled = true;
+            testAnalyze.textContent = 'Analizando...';
+
+            setTimeout(() => {
+                testResults.style.display = 'block';
+                testInfo.textContent = 'La imagen se procesó correctamente. El análisis funcionaría aquí.';
+                testAnalyze.disabled = false;
+                testAnalyze.textContent = 'Analizar';
+                log('Análisis completado');
+            }, 1000);
+        });
+
+        log('Event listeners agregados - esperando acción del usuario');
+    </script>
+</body>
+</html>
