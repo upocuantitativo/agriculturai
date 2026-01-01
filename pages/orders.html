@@ -1,0 +1,379 @@
+<!-- Página de Pedidos / Carrito -->
+<div class="container content-section">
+    <h1 class="section-title text-center">
+        <i class="bi bi-cart-check me-2"></i>
+        Mi Carrito de Compras
+    </h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Carrito de compras -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="bi bi-cart3 me-2"></i>
+                        Productos en el carrito
+                    </span>
+                    <button type="button" class="btn btn-sm btn-light" id="clear-cart">
+                        <i class="bi bi-trash me-1"></i>
+                        Vaciar carrito
+                    </button>
+                </div>
+                <div class="card-body" id="cart-items">
+                    <!-- Los items del carrito se mostrarán aquí -->
+                </div>
+            </div>
+
+            <!-- Estado vacío -->
+            <div id="empty-cart" style="display: none;">
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="bi bi-cart-x"></i>
+                    </div>
+                    <h3>Tu carrito está vacío</h3>
+                    <p>Explora nuestro catálogo y agrega productos a tu carrito</p>
+                    <a href="/marketplace" data-link class="btn btn-primary btn-lg">
+                        <i class="bi bi-shop me-2"></i>
+                        Ir al Marketplace
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- Resumen del pedido -->
+            <div class="card sticky-top" style="top: 1rem;" id="order-summary">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Resumen del Pedido</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <strong id="subtotal">$0</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-muted small">
+                        <span>Envío:</span>
+                        <span>A calcular</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>Total:</strong>
+                        <strong class="text-primary fs-4" id="total">$0</strong>
+                    </div>
+
+                    <button type="button" class="btn btn-success w-100 mb-2" id="proceed-checkout" disabled>
+                        <i class="bi bi-credit-card me-2"></i>
+                        Proceder al Pago
+                    </button>
+
+                    <a href="/marketplace" data-link class="btn btn-outline-primary w-100">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Seguir Comprando
+                    </a>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="bi bi-info-circle text-info me-2"></i>
+                        Información de Compra
+                    </h6>
+                    <ul class="small mb-0">
+                        <li>Envío a toda la región</li>
+                        <li>Pago contra entrega disponible</li>
+                        <li>Garantía de calidad</li>
+                        <li>Soporte técnico incluido</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Checkout -->
+<div class="modal fade" id="checkoutModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-credit-card me-2"></i>
+                    Finalizar Pedido
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="checkout-form">
+                    <!-- Información del cliente -->
+                    <h6 class="mb-3">Información de Contacto</h6>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <label for="customer-name" class="form-label">Nombre Completo *</label>
+                            <input type="text" class="form-control" id="customer-name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="customer-email" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="customer-email" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="customer-phone" class="form-label">Teléfono *</label>
+                            <input type="tel" class="form-control" id="customer-phone" required placeholder="+56912345678">
+                        </div>
+                    </div>
+
+                    <!-- Dirección de entrega -->
+                    <h6 class="mb-3">Dirección de Entrega</h6>
+                    <div class="row mb-4">
+                        <div class="col-12 mb-3">
+                            <label for="delivery-address" class="form-label">Dirección Completa *</label>
+                            <input type="text" class="form-control" id="delivery-address" required placeholder="Calle, número, depto">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="delivery-city" class="form-label">Ciudad/Comuna *</label>
+                            <input type="text" class="form-control" id="delivery-city" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="delivery-region" class="form-label">Región *</label>
+                            <select class="form-select" id="delivery-region" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="metropolitana">Metropolitana</option>
+                                <option value="valparaiso">Valparaíso</option>
+                                <option value="ohiggins">O'Higgins</option>
+                                <option value="maule">Maule</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Detalles del pedido -->
+                    <h6 class="mb-3">Detalles del Pedido</h6>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <label for="delivery-date" class="form-label">Fecha de Entrega Deseada</label>
+                            <input type="date" class="form-control" id="delivery-date">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="payment-method" class="form-label">Forma de Pago *</label>
+                            <select class="form-select" id="payment-method" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="transferencia">Transferencia Bancaria</option>
+                                <option value="contra-entrega">Contra Entrega</option>
+                                <option value="cheque">Cheque</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="order-notes" class="form-label">Notas Adicionales (opcional)</label>
+                            <textarea class="form-control" id="order-notes" rows="3" placeholder="Instrucciones especiales, horarios preferidos, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Confirmar Pedido
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+window.initOrders = function() {
+    console.log('Página de pedidos cargada');
+
+    const cartItemsDiv = document.getElementById('cart-items');
+    const emptyCartDiv = document.getElementById('empty-cart');
+    const orderSummaryDiv = document.getElementById('order-summary');
+    const subtotalSpan = document.getElementById('subtotal');
+    const totalSpan = document.getElementById('total');
+    const proceedCheckoutBtn = document.getElementById('proceed-checkout');
+    const clearCartBtn = document.getElementById('clear-cart');
+    const checkoutForm = document.getElementById('checkout-form');
+    const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+
+    // Cargar carrito
+    const loadCart = () => {
+        const cart = window.utils.storage.get('shoppingCart') || [];
+
+        if (cart.length === 0) {
+            cartItemsDiv.parentElement.style.display = 'none';
+            emptyCartDiv.style.display = 'block';
+            orderSummaryDiv.style.display = 'none';
+            return;
+        }
+
+        cartItemsDiv.parentElement.style.display = 'block';
+        emptyCartDiv.style.display = 'none';
+        orderSummaryDiv.style.display = 'block';
+
+        renderCart(cart);
+        updateSummary(cart);
+    };
+
+    // Renderizar carrito
+    const renderCart = (cart) => {
+        cartItemsDiv.innerHTML = '';
+
+        cart.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'cart-item';
+
+            itemDiv.innerHTML = `
+                <img src="https://via.placeholder.com/80/28a745/ffffff?text=${item.name.substring(0, 3)}"
+                     alt="${item.name}" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h6 class="mb-1">${item.name}</h6>
+                    <p class="text-muted small mb-1">${item.supplier}</p>
+                    <p class="mb-0"><strong>${window.utils.formatCurrency(item.price)}</strong> / ${item.unit}</p>
+                </div>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">
+                        <i class="bi bi-dash"></i>
+                    </button>
+                    <span class="quantity-display">${item.quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                </div>
+                <div class="text-end">
+                    <strong>${window.utils.formatCurrency(item.price * item.quantity)}</strong>
+                    <br>
+                    <button class="btn btn-sm btn-outline-danger mt-2" onclick="removeFromCart('${item.id}')">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+
+            cartItemsDiv.appendChild(itemDiv);
+        });
+    };
+
+    // Actualizar resumen
+    const updateSummary = (cart) => {
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        subtotalSpan.textContent = window.utils.formatCurrency(subtotal);
+        totalSpan.textContent = window.utils.formatCurrency(subtotal);
+        proceedCheckoutBtn.disabled = cart.length === 0;
+    };
+
+    // Actualizar cantidad
+    window.updateQuantity = (id, change) => {
+        let cart = window.utils.storage.get('shoppingCart') || [];
+        const item = cart.find(i => i.id === id);
+
+        if (item) {
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            window.utils.storage.set('shoppingCart', cart);
+
+            // Disparar evento
+            const event = new CustomEvent('cartUpdated', { detail: { items: cart } });
+            window.dispatchEvent(event);
+
+            loadCart();
+        }
+    };
+
+    // Remover del carrito
+    window.removeFromCart = (id) => {
+        let cart = window.utils.storage.get('shoppingCart') || [];
+        cart = cart.filter(i => i.id !== id);
+        window.utils.storage.set('shoppingCart', cart);
+
+        const event = new CustomEvent('cartUpdated', { detail: { items: cart } });
+        window.dispatchEvent(event);
+
+        window.utils.showToast('Producto eliminado del carrito', 'info');
+        loadCart();
+    };
+
+    // Vaciar carrito
+    clearCartBtn.addEventListener('click', () => {
+        if (!confirm('¿Estás seguro de vaciar el carrito?')) return;
+
+        window.utils.storage.set('shoppingCart', []);
+        const event = new CustomEvent('cartUpdated', { detail: { items: [] } });
+        window.dispatchEvent(event);
+
+        window.utils.showToast('Carrito vaciado', 'info');
+        loadCart();
+    });
+
+    // Proceder al checkout
+    proceedCheckoutBtn.addEventListener('click', () => {
+        // Establecer fecha mínima (mañana)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('delivery-date').min = tomorrow.toISOString().split('T')[0];
+
+        checkoutModal.show();
+    });
+
+    // Enviar pedido
+    checkoutForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const cart = window.utils.storage.get('shoppingCart') || [];
+        if (cart.length === 0) {
+            window.utils.showToast('El carrito está vacío', 'warning');
+            return;
+        }
+
+        const orderData = {
+            id: window.utils.generateId(),
+            customerName: document.getElementById('customer-name').value,
+            customerEmail: document.getElementById('customer-email').value,
+            customerPhone: document.getElementById('customer-phone').value,
+            deliveryAddress: document.getElementById('delivery-address').value,
+            deliveryCity: document.getElementById('delivery-city').value,
+            deliveryRegion: document.getElementById('delivery-region').value,
+            deliveryDate: document.getElementById('delivery-date').value || 'A coordinar',
+            paymentMethod: document.getElementById('payment-method').value,
+            notes: document.getElementById('order-notes').value,
+            items: cart,
+            total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+
+        try {
+            window.utils.showLoading();
+
+            // TODO: Aquí se enviará a Supabase en la implementación completa
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Guardar en localStorage temporalmente
+            let orders = window.utils.storage.get('userOrders') || [];
+            orders.push(orderData);
+            window.utils.storage.set('userOrders', orders);
+
+            // Limpiar carrito
+            window.utils.storage.set('shoppingCart', []);
+            const event = new CustomEvent('cartUpdated', { detail: { items: [] } });
+            window.dispatchEvent(event);
+
+            window.utils.hideLoading();
+            checkoutModal.hide();
+
+            // Mostrar confirmación
+            alert(`¡Pedido confirmado! 🎉\n\nNúmero de pedido: ${orderData.id}\nTotal: ${window.utils.formatCurrency(orderData.total)}\n\nRecibirás un email de confirmación en ${orderData.customerEmail}`);
+
+            checkoutForm.reset();
+            loadCart();
+
+        } catch (error) {
+            console.error('Error procesando pedido:', error);
+            window.utils.hideLoading();
+            window.utils.showToast('Error al procesar el pedido', 'danger');
+        }
+    });
+
+    // Cargar carrito al iniciar
+    loadCart();
+};
+</script>

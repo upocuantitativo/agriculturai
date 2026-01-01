@@ -1,0 +1,297 @@
+<!-- Página de Diagnóstico Visual -->
+<div class="container content-section">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="section-title text-center">
+                <i class="bi bi-camera-fill me-2"></i>
+                Diagnóstico Visual de Enfermedades
+            </h1>
+            <p class="text-center text-muted mb-4">
+                Toma una foto de la planta afectada y descubre qué enfermedad tiene en segundos
+            </p>
+
+            <!-- Área de captura/subida de imagen -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div id="upload-area" class="text-center py-5">
+                        <i class="bi bi-cloud-upload display-1 text-primary mb-3"></i>
+                        <h4>Sube o captura una imagen</h4>
+                        <p class="text-muted mb-4">
+                            Acepta archivos JPG, PNG. Tamaño máximo: 5MB
+                        </p>
+
+                        <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+                            <!-- Botón tomar foto (móvil) -->
+                            <div class="file-input-wrapper">
+                                <input type="file" id="camera-input" accept="image/*" capture="environment">
+                                <label for="camera-input" class="file-input-label">
+                                    <i class="bi bi-camera"></i>
+                                    Tomar Foto
+                                </label>
+                            </div>
+
+                            <!-- Botón subir imagen -->
+                            <div class="file-input-wrapper">
+                                <input type="file" id="file-input" accept="image/*">
+                                <label for="file-input" class="file-input-label">
+                                    <i class="bi bi-image"></i>
+                                    Subir Imagen
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preview de imagen -->
+                    <div id="preview-area" style="display: none;">
+                        <div class="image-preview mb-3">
+                            <img id="preview-image" src="" alt="Vista previa">
+                            <div class="image-preview-overlay">
+                                <button type="button" class="btn btn-sm btn-danger" id="remove-image">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary btn-lg" id="analyze-btn">
+                                <i class="bi bi-cpu me-2"></i>
+                                Analizar Planta
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resultados del análisis -->
+                    <div id="results-area" style="display: none;">
+                        <div class="alert alert-info mb-4">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>Análisis completado.</strong> Aquí están los resultados:
+                        </div>
+
+                        <h5 class="mb-3">Posibles diagnósticos:</h5>
+
+                        <!-- Los resultados se insertarán aquí dinámicamente -->
+                        <div id="diagnosis-results"></div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="button" class="btn btn-primary" id="new-analysis">
+                                <i class="bi bi-arrow-repeat me-2"></i>
+                                Nuevo Análisis
+                            </button>
+                            <a href="/marketplace" data-link class="btn btn-success">
+                                <i class="bi bi-shop me-2"></i>
+                                Ver Productos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-lightbulb text-warning me-2"></i>
+                        Consejos para mejores resultados
+                    </h5>
+                    <ul class="mb-0">
+                        <li>Toma la foto con buena iluminación natural</li>
+                        <li>Enfoca bien la parte afectada de la planta</li>
+                        <li>Evita sombras o reflejos en la imagen</li>
+                        <li>Captura solo la hoja o parte enferma, no toda la planta</li>
+                        <li>Asegúrate que la imagen no esté borrosa</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Función de inicialización de la página de diagnóstico
+window.initDiagnosis = function() {
+    console.log('Página de diagnóstico cargada');
+
+    const cameraInput = document.getElementById('camera-input');
+    const fileInput = document.getElementById('file-input');
+    const uploadArea = document.getElementById('upload-area');
+    const previewArea = document.getElementById('preview-area');
+    const resultsArea = document.getElementById('results-area');
+    const previewImage = document.getElementById('preview-image');
+    const removeImageBtn = document.getElementById('remove-image');
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const newAnalysisBtn = document.getElementById('new-analysis');
+    const diagnosisResults = document.getElementById('diagnosis-results');
+
+    let selectedImage = null;
+
+    // Manejar selección de imagen (cámara o archivo)
+    const handleImageSelect = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validar tipo de archivo
+        if (!file.type.match('image.*')) {
+            window.utils.showToast('Por favor selecciona una imagen válida', 'danger');
+            return;
+        }
+
+        // Validar tamaño (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            window.utils.showToast('La imagen es muy grande. Tamaño máximo: 5MB', 'warning');
+            return;
+        }
+
+        try {
+            window.utils.showLoading();
+
+            // Comprimir imagen si es muy grande
+            selectedImage = await window.utils.compressImage(file, 800, 800, 0.9);
+
+            // Mostrar preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                uploadArea.style.display = 'none';
+                previewArea.style.display = 'block';
+                resultsArea.style.display = 'none';
+            };
+            reader.readAsDataURL(selectedImage);
+
+            window.utils.hideLoading();
+        } catch (error) {
+            console.error('Error procesando imagen:', error);
+            window.utils.showToast('Error al procesar la imagen', 'danger');
+            window.utils.hideLoading();
+        }
+    };
+
+    cameraInput.addEventListener('change', handleImageSelect);
+    fileInput.addEventListener('change', handleImageSelect);
+
+    // Remover imagen
+    removeImageBtn.addEventListener('click', () => {
+        selectedImage = null;
+        previewImage.src = '';
+        cameraInput.value = '';
+        fileInput.value = '';
+        uploadArea.style.display = 'block';
+        previewArea.style.display = 'none';
+        resultsArea.style.display = 'none';
+    });
+
+    // Analizar imagen
+    analyzeBtn.addEventListener('click', async () => {
+        if (!selectedImage) {
+            window.utils.showToast('No hay imagen para analizar', 'warning');
+            return;
+        }
+
+        try {
+            window.utils.showLoading();
+
+            // TODO: Aquí se integrará el modelo de TensorFlow.js
+            // Por ahora, simulamos resultados de ejemplo
+
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Simular procesamiento
+
+            const mockResults = [
+                {
+                    disease: 'Tizón tardío (Phytophthora infestans)',
+                    confidence: 0.87,
+                    symptoms: 'Manchas marrones en hojas, bordes amarillentos',
+                    treatment: 'Aplicar fungicida cúprico cada 7-10 días',
+                    prevention: 'Evitar exceso de humedad, mejorar ventilación'
+                },
+                {
+                    disease: 'Mildiu velloso',
+                    confidence: 0.65,
+                    symptoms: 'Manchas amarillas en haz, pelusa blanca en envés',
+                    treatment: 'Fungicida sistémico específico para mildiu',
+                    prevention: 'Reducir riego por aspersión, aumentar espaciamiento'
+                },
+                {
+                    disease: 'Planta sana',
+                    confidence: 0.12,
+                    symptoms: 'No se detectan síntomas evidentes',
+                    treatment: 'Continuar con manejo normal del cultivo',
+                    prevention: 'Mantener buenas prácticas agrícolas'
+                }
+            ];
+
+            displayResults(mockResults);
+
+            // Guardar en historial
+            const diagnosis = {
+                id: window.utils.generateId(),
+                timestamp: new Date().toISOString(),
+                results: mockResults,
+                imageData: previewImage.src.substring(0, 100) + '...' // Guardar miniatura
+            };
+            window.utils.storage.set('lastDiagnosis', diagnosis);
+
+            previewArea.style.display = 'none';
+            resultsArea.style.display = 'block';
+
+            window.utils.hideLoading();
+            window.utils.showToast('Análisis completado exitosamente', 'success');
+
+        } catch (error) {
+            console.error('Error analizando imagen:', error);
+            window.utils.showToast('Error al analizar la imagen', 'danger');
+            window.utils.hideLoading();
+        }
+    });
+
+    // Mostrar resultados
+    const displayResults = (results) => {
+        diagnosisResults.innerHTML = '';
+
+        results.forEach((result, index) => {
+            const confidencePercent = Math.round(result.confidence * 100);
+            const confidenceClass = confidencePercent >= 70 ? 'confidence-high' :
+                                   confidencePercent >= 40 ? 'confidence-medium' :
+                                   'confidence-low';
+
+            const resultCard = document.createElement('div');
+            resultCard.className = 'diagnosis-result';
+            resultCard.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="mb-0">${index + 1}. ${result.disease}</h5>
+                    <span class="badge ${confidenceClass === 'confidence-high' ? 'bg-success' :
+                                          confidenceClass === 'confidence-medium' ? 'bg-warning' :
+                                          'bg-secondary'}">
+                        ${confidencePercent}%
+                    </span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill ${confidenceClass}" style="width: ${confidencePercent}%"></div>
+                </div>
+                <div class="mt-3">
+                    <p class="mb-2"><strong><i class="bi bi-search me-2"></i>Síntomas:</strong> ${result.symptoms}</p>
+                    <p class="mb-2"><strong><i class="bi bi-capsule me-2"></i>Tratamiento:</strong> ${result.treatment}</p>
+                    <p class="mb-0"><strong><i class="bi bi-shield-check me-2"></i>Prevención:</strong> ${result.prevention}</p>
+                </div>
+            `;
+            diagnosisResults.appendChild(resultCard);
+        });
+    };
+
+    // Nuevo análisis
+    newAnalysisBtn.addEventListener('click', () => {
+        selectedImage = null;
+        previewImage.src = '';
+        cameraInput.value = '';
+        fileInput.value = '';
+        uploadArea.style.display = 'block';
+        previewArea.style.display = 'none';
+        resultsArea.style.display = 'none';
+        diagnosisResults.innerHTML = '';
+    });
+
+    // Cargar último diagnóstico si existe
+    const lastDiagnosis = window.utils.storage.get('lastDiagnosis');
+    if (lastDiagnosis) {
+        console.log('Último diagnóstico disponible:', lastDiagnosis.timestamp);
+    }
+};
+</script>

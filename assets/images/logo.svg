@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#28a745;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#20c997;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Leaf -->
+  <path d="M 32 8 Q 40 15, 45 25 Q 48 35, 45 45 Q 40 52, 32 56 Q 24 52, 19 45 Q 16 35, 19 25 Q 24 15, 32 8 Z"
+        fill="url(#leafGradient)" stroke="#1e7e34" stroke-width="2"/>
+
+  <!-- Vein -->
+  <path d="M 32 12 L 32 52" stroke="#1e7e34" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Side veins -->
+  <path d="M 32 22 Q 35 25, 38 27" stroke="#1e7e34" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <path d="M 32 22 Q 29 25, 26 27" stroke="#1e7e34" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <path d="M 32 32 Q 36 34, 40 36" stroke="#1e7e34" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <path d="M 32 32 Q 28 34, 24 36" stroke="#1e7e34" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <path d="M 32 42 Q 35 44, 38 46" stroke="#1e7e34" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <path d="M 32 42 Q 29 44, 26 46" stroke="#1e7e34" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+
+  <!-- AI circuit element -->
+  <circle cx="32" cy="32" r="6" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="32" cy="32" r="2" fill="#ffffff"/>
+  <line x1="32" y1="26" x2="32" y2="22" stroke="#ffffff" stroke-width="2"/>
+  <line x1="32" y1="38" x2="32" y2="42" stroke="#ffffff" stroke-width="2"/>
+  <line x1="26" y1="32" x2="22" y2="32" stroke="#ffffff" stroke-width="2"/>
+  <line x1="38" y1="32" x2="42" y2="32" stroke="#ffffff" stroke-width="2"/>
+</svg>

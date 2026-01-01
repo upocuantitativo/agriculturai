@@ -1,0 +1,330 @@
+<!-- Página de Gestión de Cultivos -->
+<div class="container content-section">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="section-title mb-0">
+                    <i class="bi bi-tree-fill me-2"></i>
+                    Mis Cultivos
+                </h1>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCropModal">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Agregar Cultivo
+                </button>
+            </div>
+
+            <!-- Lista de cultivos -->
+            <div id="crops-list">
+                <!-- Los cultivos se cargarán aquí dinámicamente -->
+            </div>
+
+            <!-- Estado vacío -->
+            <div id="empty-state" style="display: none;">
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="bi bi-tree"></i>
+                    </div>
+                    <h3>No tienes cultivos registrados</h3>
+                    <p>Comienza agregando tu primer cultivo para recibir recomendaciones personalizadas</p>
+                    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addCropModal">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Agregar Primer Cultivo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar/Editar Cultivo -->
+<div class="modal fade" id="addCropModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    <span id="modal-title">Agregar Cultivo</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="crop-form">
+                    <input type="hidden" id="crop-id">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="crop-type" class="form-label">Tipo de Cultivo *</label>
+                            <select class="form-select" id="crop-type" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="tomate">Tomate</option>
+                                <option value="papa">Papa</option>
+                                <option value="maiz">Maíz</option>
+                                <option value="lechuga">Lechuga</option>
+                                <option value="zanahoria">Zanahoria</option>
+                                <option value="cebolla">Cebolla</option>
+                                <option value="pimiento">Pimiento</option>
+                                <option value="fresa">Fresa</option>
+                                <option value="pepino">Pepino</option>
+                                <option value="calabaza">Calabaza</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="crop-variety" class="form-label">Variedad</label>
+                            <input type="text" class="form-control" id="crop-variety" placeholder="Ej: Roma, Cherry">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="crop-area" class="form-label">Área Cultivada (m²) *</label>
+                            <input type="number" class="form-control" id="crop-area" min="1" required placeholder="100">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="crop-date" class="form-label">Fecha de Siembra/Trasplante *</label>
+                            <input type="date" class="form-control" id="crop-date" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="soil-type" class="form-label">Tipo de Suelo *</label>
+                            <select class="form-select" id="soil-type" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="arcilloso">Arcilloso</option>
+                                <option value="arenoso">Arenoso</option>
+                                <option value="franco">Franco</option>
+                                <option value="franco-arenoso">Franco-arenoso</option>
+                                <option value="franco-arcilloso">Franco-arcilloso</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="irrigation-type" class="form-label">Método de Riego *</label>
+                            <select class="form-select" id="irrigation-type" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="goteo">Goteo</option>
+                                <option value="aspersion">Aspersión</option>
+                                <option value="gravedad">Gravedad</option>
+                                <option value="microaspersion">Microaspersión</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label for="crop-location" class="form-label">Ubicación (opcional)</label>
+                            <input type="text" class="form-control" id="crop-location" placeholder="Ej: Parcela Norte, Invernadero 2">
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-2"></i>
+                            Guardar Cultivo
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+window.initCrops = function() {
+    console.log('Página de cultivos cargada');
+
+    const cropsList = document.getElementById('crops-list');
+    const emptyState = document.getElementById('empty-state');
+    const cropForm = document.getElementById('crop-form');
+    const addCropModal = new bootstrap.Modal(document.getElementById('addCropModal'));
+
+    // Cargar cultivos desde localStorage
+    const loadCrops = () => {
+        const crops = window.utils.storage.get('userCrops') || [];
+
+        if (crops.length === 0) {
+            cropsList.innerHTML = '';
+            emptyState.style.display = 'block';
+            return;
+        }
+
+        emptyState.style.display = 'none';
+        cropsList.innerHTML = '';
+
+        crops.forEach(crop => {
+            const cropCard = createCropCard(crop);
+            cropsList.appendChild(cropCard);
+        });
+    };
+
+    // Crear tarjeta de cultivo
+    const createCropCard = (crop) => {
+        const card = document.createElement('div');
+        card.className = 'card crop-card mb-3';
+
+        const daysSincePlanting = window.utils.daysSince(crop.plantingDate);
+        const stage = getCropStage(daysSincePlanting, crop.type);
+
+        card.innerHTML = `
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-tree-fill text-success me-2"></i>
+                                ${crop.type.charAt(0).toUpperCase() + crop.type.slice(1)}
+                                ${crop.variety ? `<span class="text-muted small">- ${crop.variety}</span>` : ''}
+                            </h5>
+                            <span class="crop-status ${stage.class}">${stage.name}</span>
+                        </div>
+                        <p class="text-muted mb-2">
+                            <i class="bi bi-calendar me-1"></i>
+                            Plantado: ${window.utils.formatDate(crop.plantingDate)}
+                            <span class="ms-2">(${daysSincePlanting} días)</span>
+                        </p>
+                        <div class="row g-2 small text-muted">
+                            <div class="col-6 col-md-4">
+                                <i class="bi bi-rulers me-1"></i>
+                                Área: ${crop.area} m²
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <i class="bi bi-moisture me-1"></i>
+                                Suelo: ${crop.soilType}
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <i class="bi bi-droplet me-1"></i>
+                                Riego: ${crop.irrigationType}
+                            </div>
+                            ${crop.location ? `
+                            <div class="col-12">
+                                <i class="bi bi-geo-alt me-1"></i>
+                                ${crop.location}
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="viewCropDetails('${crop.id}')">
+                            <i class="bi bi-eye"></i>
+                            Ver
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary me-1" onclick="editCrop('${crop.id}')">
+                            <i class="bi bi-pencil"></i>
+                            Editar
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteCrop('${crop.id}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return card;
+    };
+
+    // Determinar etapa del cultivo
+    const getCropStage = (days, type) => {
+        // Ciclos aproximados (días)
+        const cycles = {
+            tomate: { germination: 10, growth: 40, flowering: 60, fruiting: 90 },
+            papa: { germination: 15, growth: 45, flowering: 70, fruiting: 120 },
+            lechuga: { germination: 7, growth: 30, flowering: 50, fruiting: 60 },
+            default: { germination: 10, growth: 35, flowering: 60, fruiting: 90 }
+        };
+
+        const cycle = cycles[type] || cycles.default;
+
+        if (days < cycle.germination) {
+            return { name: 'Germinación', class: 'germination' };
+        } else if (days < cycle.growth) {
+            return { name: 'Crecimiento', class: 'growth' };
+        } else if (days < cycle.flowering) {
+            return { name: 'Floración', class: 'flowering' };
+        } else {
+            return { name: 'Fructificación', class: 'fruiting' };
+        }
+    };
+
+    // Guardar cultivo
+    cropForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const cropId = document.getElementById('crop-id').value;
+        const cropData = {
+            id: cropId || window.utils.generateId(),
+            type: document.getElementById('crop-type').value,
+            variety: document.getElementById('crop-variety').value,
+            area: parseInt(document.getElementById('crop-area').value),
+            plantingDate: document.getElementById('crop-date').value,
+            soilType: document.getElementById('soil-type').value,
+            irrigationType: document.getElementById('irrigation-type').value,
+            location: document.getElementById('crop-location').value,
+            createdAt: cropId ? undefined : new Date().toISOString()
+        };
+
+        let crops = window.utils.storage.get('userCrops') || [];
+
+        if (cropId) {
+            // Editar existente
+            crops = crops.map(c => c.id === cropId ? { ...c, ...cropData } : c);
+            window.utils.showToast('Cultivo actualizado exitosamente', 'success');
+        } else {
+            // Agregar nuevo
+            crops.push(cropData);
+            window.utils.showToast('Cultivo agregado exitosamente', 'success');
+        }
+
+        window.utils.storage.set('userCrops', crops);
+        loadCrops();
+        addCropModal.hide();
+        cropForm.reset();
+        document.getElementById('crop-id').value = '';
+    });
+
+    // Reset form cuando se cierra el modal
+    document.getElementById('addCropModal').addEventListener('hidden.bs.modal', () => {
+        cropForm.reset();
+        document.getElementById('crop-id').value = '';
+        document.getElementById('modal-title').textContent = 'Agregar Cultivo';
+    });
+
+    // Funciones globales para botones
+    window.editCrop = (id) => {
+        const crops = window.utils.storage.get('userCrops') || [];
+        const crop = crops.find(c => c.id === id);
+
+        if (crop) {
+            document.getElementById('crop-id').value = crop.id;
+            document.getElementById('crop-type').value = crop.type;
+            document.getElementById('crop-variety').value = crop.variety || '';
+            document.getElementById('crop-area').value = crop.area;
+            document.getElementById('crop-date').value = crop.plantingDate;
+            document.getElementById('soil-type').value = crop.soilType;
+            document.getElementById('irrigation-type').value = crop.irrigationType;
+            document.getElementById('crop-location').value = crop.location || '';
+            document.getElementById('modal-title').textContent = 'Editar Cultivo';
+
+            addCropModal.show();
+        }
+    };
+
+    window.deleteCrop = (id) => {
+        if (!confirm('¿Estás seguro de eliminar este cultivo?')) return;
+
+        let crops = window.utils.storage.get('userCrops') || [];
+        crops = crops.filter(c => c.id !== id);
+        window.utils.storage.set('userCrops', crops);
+        loadCrops();
+        window.utils.showToast('Cultivo eliminado', 'info');
+    };
+
+    window.viewCropDetails = (id) => {
+        // TODO: Implementar vista detallada con recomendaciones
+        window.utils.showToast('Función en desarrollo', 'info');
+    };
+
+    // Cargar cultivos al iniciar
+    loadCrops();
+
+    // Limitar fecha máxima a hoy
+    document.getElementById('crop-date').max = new Date().toISOString().split('T')[0];
+};
+</script>

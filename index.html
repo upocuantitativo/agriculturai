@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plataforma de IA para agricultura - Diagnóstico de enfermedades, gestión de cultivos, chatbot agrícola y marketplace">
+    <meta name="keywords" content="agricultura, IA, diagnóstico plantas, enfermedades, cultivos, agro">
+    <meta name="author" content="AgriculturaI">
+
+    <title>AgriculturaI - Plataforma de IA para Agricultura</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/" data-link>
+                <i class="bi bi-flower2 me-2 fs-4"></i>
+                <span class="fw-bold">AgriculturaI</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" data-link>
+                            <i class="bi bi-house-door me-1"></i>
+                            Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/diagnosis" data-link>
+                            <i class="bi bi-camera me-1"></i>
+                            Diagnóstico
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/crops" data-link>
+                            <i class="bi bi-tree me-1"></i>
+                            Mis Cultivos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chat" data-link>
+                            <i class="bi bi-chat-dots me-1"></i>
+                            Asistente
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/marketplace" data-link>
+                            <i class="bi bi-shop me-1"></i>
+                            Productos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="/orders" data-link>
+                            <i class="bi bi-cart me-1"></i>
+                            Pedidos
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-badge" style="display: none;">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="spinner-container" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="app-content" class="container-fluid px-0">
+        <!-- Las páginas se cargarán aquí dinámicamente -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5 class="mb-3">
+                        <i class="bi bi-flower2 me-2"></i>
+                        AgriculturaI
+                    </h5>
+                    <p class="text-light-emphasis">
+                        Plataforma de inteligencia artificial aplicada a la agricultura.
+                        Herramientas gratuitas para agricultores.
+                    </p>
+                </div>
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5 class="mb-3">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/" data-link class="text-light-emphasis text-decoration-none">Inicio</a></li>
+                        <li><a href="/diagnosis" data-link class="text-light-emphasis text-decoration-none">Diagnóstico Visual</a></li>
+                        <li><a href="/crops" data-link class="text-light-emphasis text-decoration-none">Gestión de Cultivos</a></li>
+                        <li><a href="/chat" data-link class="text-light-emphasis text-decoration-none">Asistente Virtual</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <h5 class="mb-3">Información</h5>
+                    <p class="text-light-emphasis">
+                        <i class="bi bi-github me-2"></i>
+                        <a href="https://github.com/upocuantitativo/agriculturai" target="_blank" class="text-light-emphasis text-decoration-none">
+                            Código Abierto
+                        </a>
+                    </p>
+                    <p class="text-light-emphasis">
+                        <i class="bi bi-envelope me-2"></i>
+                        contacto@agriculturai.org
+                    </p>
+                    <p class="text-light-emphasis small">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Licencia MIT - Uso libre y gratuito
+                    </p>
+                </div>
+            </div>
+
+            <hr class="my-4 border-secondary">
+
+            <div class="row">
+                <div class="col text-center text-light-emphasis">
+                    <p class="mb-0">
+                        &copy; 2026 AgriculturaI. Todos los derechos reservados.
+                    </p>
+                    <p class="mb-0 small">
+                        Desarrollado con tecnología de código abierto
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- TensorFlow.js (cargado solo cuando se necesita) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script> -->
+
+    <!-- App Scripts -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/router.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

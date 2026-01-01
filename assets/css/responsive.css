@@ -1,0 +1,409 @@
+/**
+ * Media queries para diseño responsive
+ * Mobile-first approach
+ */
+
+/* Tablets y pantallas pequeñas (≥ 768px) */
+@media (max-width: 768px) {
+    /* Typography */
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    /* Navbar */
+    .navbar-nav {
+        margin-top: 1rem;
+    }
+
+    .nav-link {
+        padding: 0.75rem 1rem !important;
+        margin-bottom: 0.25rem;
+    }
+
+    /* Cards */
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Chat */
+    .chat-bubble {
+        max-width: 85%;
+    }
+
+    .chat-container {
+        max-height: 400px;
+    }
+
+    /* Products */
+    .product-card {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Timeline */
+    .timeline::before {
+        left: 20px;
+    }
+
+    .timeline-item {
+        padding-left: 50px;
+    }
+
+    .timeline-marker {
+        left: 12px;
+    }
+
+    /* Progress steps */
+    .progress-steps {
+        flex-direction: column;
+    }
+
+    .progress-step::before {
+        display: none;
+    }
+
+    .progress-step {
+        margin-bottom: 1rem;
+    }
+
+    /* Forms */
+    .form-control,
+    .form-select {
+        font-size: 16px; /* Evita zoom en iOS */
+    }
+
+    /* Buttons */
+    .btn-lg {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    /* Image preview */
+    .image-preview {
+        max-width: 100%;
+    }
+
+    /* Quick actions */
+    .quick-action {
+        margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    footer .col-md-4 {
+        margin-bottom: 2rem;
+    }
+
+    footer .col-md-4:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Móviles en orientación portrait (≥ 576px) */
+@media (max-width: 576px) {
+    /* Hero */
+    .hero-section {
+        padding: 2rem 0;
+    }
+
+    .hero-section h1 {
+        font-size: 1.75rem;
+    }
+
+    .hero-section p {
+        font-size: 0.95rem;
+    }
+
+    /* Spacing */
+    .content-section {
+        padding: 2rem 0;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    .btn-lg {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    /* Cards */
+    .card-body {
+        padding: 1rem;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+
+    /* Chat */
+    .chat-bubble {
+        max-width: 90%;
+        padding: 0.75rem;
+    }
+
+    .chat-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    /* Products */
+    .product-image {
+        height: 180px;
+    }
+
+    .product-price {
+        font-size: 1.25rem;
+    }
+
+    /* Cart */
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-item-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .cart-item-quantity {
+        margin-top: 0.5rem;
+    }
+
+    /* Empty state */
+    .empty-state {
+        padding: 2rem 1rem;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+    }
+
+    /* Progress steps */
+    .step-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    .step-label {
+        font-size: 0.85rem;
+    }
+
+    /* Modal */
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    /* File input */
+    .file-input-label {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Diagnosis results */
+    .diagnosis-result {
+        padding: 1rem;
+    }
+}
+
+/* Móviles pequeños (≥ 375px) */
+@media (max-width: 375px) {
+    /* Typography */
+    body {
+        font-size: 14px;
+    }
+
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    /* Navbar */
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Forms */
+    .form-control,
+    .form-select {
+        padding: 0.65rem 0.875rem;
+    }
+
+    /* Cards */
+    .feature-icon {
+        font-size: 2rem;
+    }
+
+    .quick-action-icon {
+        font-size: 2rem;
+    }
+
+    /* Chat */
+    .chat-container {
+        max-height: 300px;
+    }
+
+    /* Products */
+    .product-image {
+        height: 150px;
+    }
+}
+
+/* Tablets en landscape (≥ 992px) */
+@media (min-width: 768px) and (max-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* Desktops grandes (≥ 1200px) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+    }
+
+    .hero-section p {
+        font-size: 1.3rem;
+    }
+
+    .feature-card {
+        padding: 2.5rem;
+    }
+
+    .chat-container {
+        max-height: 600px;
+    }
+}
+
+/* Touch-friendly para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    /* Aumentar áreas clicables */
+    .btn,
+    .nav-link,
+    .card {
+        min-height: 44px;
+    }
+
+    /* Remover hover effects que no funcionan en touch */
+    .card:hover {
+        transform: none;
+    }
+
+    .quick-action:hover {
+        transform: none;
+    }
+
+    /* Mejor feedback táctil */
+    .btn:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Orientación landscape en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero-section {
+        padding: 1.5rem 0;
+    }
+
+    .chat-container {
+        max-height: 250px;
+    }
+
+    .modal-dialog {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+/* Dark mode (experimental, para futuras versiones) */
+@media (prefers-color-scheme: dark) {
+    /*
+    :root {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --text-primary: #ffffff;
+        --text-secondary: #b0b0b0;
+    }
+    */
+}
+
+/* Preferencia de movimiento reducido (accesibilidad) */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Print styles */
+@media print {
+    /* Ocultar elementos no necesarios */
+    nav,
+    footer,
+    .btn,
+    .file-input-wrapper {
+        display: none !important;
+    }
+
+    /* Ajustar colores para impresión */
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        page-break-inside: avoid;
+    }
+
+    /* Links con URL visible */
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+}

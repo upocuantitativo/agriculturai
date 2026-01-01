@@ -1,0 +1,291 @@
+<!-- Página de Asistente Virtual (Chatbot) -->
+<div class="container content-section">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="section-title text-center">
+                <i class="bi bi-chat-dots-fill me-2"></i>
+                Asistente Agr ícola Virtual
+            </h1>
+            <p class="text-center text-muted mb-4">
+                Consulta sobre fitopatología, nutrición, riego y más. Disponible 24/7
+            </p>
+
+            <!-- Chat Container -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>
+                            <i class="bi bi-robot me-2"></i>
+                            Asistente Agrícola
+                        </span>
+                        <button type="button" class="btn btn-sm btn-light" id="clear-chat">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <!-- Mensajes del chat -->
+                    <div class="chat-container" id="chat-messages">
+                        <!-- Los mensajes aparecerán aquí -->
+                    </div>
+
+                    <!-- Sugerencias rápidas -->
+                    <div class="p-3 border-top bg-light" id="quick-suggestions">
+                        <p class="small text-muted mb-2">Prueba preguntar:</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-sm btn-outline-primary quick-suggestion">
+                                ¿Cómo prevenir el tizón?
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary quick-suggestion">
+                                ¿Cuánto riego necesita el tomate?
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary quick-suggestion">
+                                ¿Qué fertilizante usar?
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary quick-suggestion">
+                                Manchas amarillas en hojas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-white">
+                    <form id="chat-form" class="d-flex gap-2">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="chat-input"
+                            placeholder="Escribe tu pregunta..."
+                            autocomplete="off"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send-fill"></i>
+                        </button>
+                    </form>
+                    <div class="small text-muted mt-2">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Este asistente proporciona orientación general. Para casos graves, consulta un profesional.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="mt-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="bi bi-lightbulb text-warning me-2"></i>
+                                    Puedo ayudarte con:
+                                </h6>
+                                <ul class="small mb-0">
+                                    <li>Identificación de enfermedades</li>
+                                    <li>Recomendaciones de tratamiento</li>
+                                    <li>Manejo de nutrición y fertilización</li>
+                                    <li>Programación de riego</li>
+                                    <li>Control de plagas</li>
+                                    <li>Sugerencias de productos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <i class="bi bi-question-circle text-info me-2"></i>
+                                    Ejemplos de preguntas:
+                                </h6>
+                                <ul class="small mb-0">
+                                    <li>"¿Cómo combatir la mosca blanca?"</li>
+                                    <li>"Mis tomates tienen manchas negras"</li>
+                                    <li>"¿Cuándo aplicar fertilizante NPK?"</li>
+                                    <li>"¿Qué hacer con el oídio?"</li>
+                                    <li>"Diferencia entre riego por goteo y aspersión"</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+window.initChat = function() {
+    console.log('Página de chat cargada');
+
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const clearChatBtn = document.getElementById('clear-chat');
+    const quickSuggestions = document.querySelectorAll('.quick-suggestion');
+
+    // Cargar historial de chat
+    let chatHistory = window.utils.storage.get('chatHistory') || [];
+
+    // Base de conocimientos (respuestas predefinidas)
+    const knowledgeBase = {
+        'tizon|manchas marrones|phytophthora': {
+            response: `El tizón tardío es causado por el hongo Phytophthora infestans. Se caracteriza por:\n\n**Síntomas:**\n- Manchas marrones en hojas\n- Bordes amarillentos\n- Pudrición en frutos\n\n**Tratamiento:**\n1. Eliminar hojas afectadas\n2. Aplicar fungicida cúprico cada 7-10 días\n3. Mejorar ventilación del cultivo\n\n**Prevención:**\n- Evitar exceso de humedad\n- No mojar follaje al regar\n- Rotación de cultivos\n\n¿Necesitas recomendaciones de productos?`
+        },
+        'riego|agua|irrigacion': {
+            response: `El riego adecuado depende del cultivo y clima. Recomendaciones generales:\n\n**Frecuencia:**\n- Verano: diario o cada 2 días\n- Invierno: cada 3-5 días\n\n**Cantidad:**\n- Tomate: 3-4 L/planta/día\n- Lechuga: 1-2 L/planta/día\n- Pimiento: 2-3 L/planta/día\n\n**Métodos:**\n- **Goteo:** más eficiente, ahorra agua\n- **Aspersión:** buena cobertura, mayor consumo\n- **Gravedad:** tradicional, menos control\n\n¿Sobre qué cultivo específico necesitas información?`
+        },
+        'fertilizante|npk|abono|nutriente': {
+            response: `La fertilización correcta es clave para un cultivo saludable:\n\n**NPK - ¿Qué significa?**\n- N (Nitrógeno): crecimiento vegetativo\n- P (Fósforo): raíces y floración\n- K (Potasio): frutos y resistencia\n\n**Etapas:**\n1. **Presiembra:** Compost o materia orgánica\n2. **Crecimiento:** NPK 15-15-15 o 20-10-10\n3. **Floración/Fructificación:** NPK 10-20-20\n\n**Frecuencia:**\n- Fertilizante químico: cada 15-20 días\n- Abono orgánico: mensual\n\n¿Necesitas ayuda para elegir fertilizante?`
+        },
+        'plaga|insecto|mosca|afido|gusano': {
+            response: `El control de plagas puede ser orgánico o químico:\n\n**Plagas comunes:**\n- **Mosca blanca:** Jabón potásico, aceite de neem\n- **Pulgones/Áfidos:** Agua jabonosa, mariquitas (control biológico)\n- **Gusanos:** Bacillus thuringiensis (Bt)\n- **Trips:** Trampas azules, insecticidas específicos\n\n**Prevención:**\n- Monitoreo regular\n- Plantas trampa\n- Rotación de cultivos\n- Biodiversidad\n\n**Tratamiento:**\n1. Identificar la plaga correctamente\n2. Comenzar con métodos orgánicos\n3. Insecticidas químicos como último recurso\n\n¿Qué plaga específica afecta tu cultivo?`
+        }
+    };
+
+    // Agregar mensaje al chat
+    const addMessage = (text, isUser = false) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = `chat-avatar ${isUser ? 'user' : 'bot'}`;
+        avatar.innerHTML = isUser ? '<i class="bi bi-person-fill"></i>' : '<i class="bi bi-robot"></i>';
+
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${isUser ? 'user' : 'bot'}`;
+        bubble.textContent = text;
+
+        // Para el bot, permitir HTML/markdown simple
+        if (!isUser) {
+            bubble.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        }
+
+        const timestamp = document.createElement('div');
+        timestamp.className = 'chat-timestamp';
+        timestamp.textContent = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+
+        messageDiv.appendChild(avatar);
+        const contentDiv = document.createElement('div');
+        contentDiv.appendChild(bubble);
+        contentDiv.appendChild(timestamp);
+        messageDiv.appendChild(contentDiv);
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Guardar en historial
+        chatHistory.push({
+            text,
+            isUser,
+            timestamp: new Date().toISOString()
+        });
+        window.utils.storage.set('chatHistory', chatHistory);
+    };
+
+    // Procesar pregunta del usuario
+    const processQuestion = (question) => {
+        const questionLower = question.toLowerCase();
+
+        // Buscar coincidencia en base de conocimientos
+        for (const [pattern, data] of Object.entries(knowledgeBase)) {
+            const regex = new RegExp(pattern, 'i');
+            if (regex.test(questionLower)) {
+                return data.response;
+            }
+        }
+
+        // Respuesta genérica si no encuentra coincidencia
+        return `Gracias por tu pregunta sobre "${question}".\n\nSoy un asistente en desarrollo y mi base de conocimientos está creciendo. Para obtener la mejor respuesta, intenta:\n\n1. Usar palabras clave como: tizón, riego, fertilizante, plaga\n2. Describir el problema: "manchas amarillas en hojas"\n3. Especificar el cultivo: "riego para tomate"\n\nTambién puedes:\n- Usar el <a href="/diagnosis" data-link>Diagnóstico Visual</a> para identificar enfermedades\n- Visitar el <a href="/marketplace" data-link>Marketplace</a> para ver productos\n\n¿Puedo ayudarte con algo más específico?`;
+    };
+
+    // Manejar envío de mensaje
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const userMessage = chatInput.value.trim();
+        if (!userMessage) return;
+
+        // Agregar mensaje del usuario
+        addMessage(userMessage, true);
+        chatInput.value = '';
+
+        // Simular "escribiendo..."
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-message bot';
+        typingDiv.innerHTML = `
+            <div class="chat-avatar bot"><i class="bi bi-robot"></i></div>
+            <div class="chat-bubble bot">
+                <span class="typing-indicator">
+                    <span></span><span></span><span></span>
+                </span>
+            </div>
+        `;
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Procesar respuesta
+        setTimeout(() => {
+            typingDiv.remove();
+            const response = processQuestion(userMessage);
+            addMessage(response, false);
+        }, 1000 + Math.random() * 1000);
+    });
+
+    // Sugerencias rápidas
+    quickSuggestions.forEach(btn => {
+        btn.addEventListener('click', () => {
+            chatInput.value = btn.textContent;
+            chatInput.focus();
+        });
+    });
+
+    // Limpiar chat
+    clearChatBtn.addEventListener('click', () => {
+        if (confirm('¿Deseas limpiar el historial del chat?')) {
+            chatHistory = [];
+            window.utils.storage.remove('chatHistory');
+            chatMessages.innerHTML = '';
+            addMessage('¡Hola! Soy tu asistente agrícola virtual. ¿En qué puedo ayudarte hoy?', false);
+            window.utils.showToast('Historial limpiado', 'info');
+        }
+    });
+
+    // Cargar historial o mostrar mensaje de bienvenida
+    if (chatHistory.length === 0) {
+        addMessage('¡Hola! Soy tu asistente agrícola virtual. Puedo ayudarte con:\n\n• Diagnóstico de enfermedades\n• Recomendaciones de riego y fertilización\n• Control de plagas\n• Sugerencias de productos\n\n¿En qué puedo ayudarte hoy?', false);
+    } else {
+        chatHistory.forEach(msg => {
+            addMessage(msg.text, msg.isUser);
+        });
+    }
+
+    // CSS para typing indicator (agregar dinámicamente)
+    const style = document.createElement('style');
+    style.textContent = `
+        .typing-indicator {
+            display: inline-flex;
+            gap: 4px;
+        }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #999;
+            animation: typing 1.4s infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+    `;
+    document.head.appendChild(style);
+};
+</script>
