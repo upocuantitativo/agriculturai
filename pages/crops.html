@@ -36,6 +36,27 @@
     </div>
 </div>
 
+<!-- Modal Detalles de Cultivo -->
+<div class="modal fade" id="cropDetailsModal" tabindex="-1" aria-labelledby="cropDetailsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="cropDetailsTitle">
+                    <i class="bi bi-tree-fill me-2"></i>
+                    Detalles del cultivo
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="cropDetailsBody">
+                <!-- Contenido inyectado dinámicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Agregar/Editar Cultivo -->
 <div class="modal fade" id="addCropModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -316,9 +337,129 @@ window.initCrops = function() {
         window.utils.showToast('Cultivo eliminado', 'info');
     };
 
+    // Recomendaciones por etapa del cultivo
+    const STAGE_RECOMMENDATIONS = {
+        germination: {
+            riego: 'Mantén el suelo húmedo (no encharcado). Riegos cortos y frecuentes.',
+            nutricion: 'No es necesaria fertilización adicional; usa sustrato bien aireado.',
+            tareas: ['Verificar humedad diaria', 'Proteger de temperaturas extremas', 'Control de hongos del semillero']
+        },
+        growth: {
+            riego: 'Riego regular según evapotranspiración; mañanas temprano son ideales.',
+            nutricion: 'Fertilizante NPK equilibrado (15-15-15) cada 10-15 días.',
+            tareas: ['Eliminar malas hierbas', 'Aporcar si procede', 'Monitorear plagas', 'Tutorar plantas altas']
+        },
+        flowering: {
+            riego: 'Aumentar ligeramente el riego. Evitar mojar las flores.',
+            nutricion: 'Aumentar fósforo (P) y potasio (K). Reducir nitrógeno.',
+            tareas: ['Polinización manual si aplica', 'Vigilar caída de flores', 'Aplicar tratamientos preventivos']
+        },
+        fruiting: {
+            riego: 'Riego constante y profundo para frutos de calidad. Evitar oscilaciones bruscas.',
+            nutricion: 'Potasio alto para calidad del fruto. Calcio para evitar fisiopatías.',
+            tareas: ['Cosecha escalonada', 'Apuntalar ramas con peso', 'Control de plagas en frutos', 'Eliminar frutos dañados']
+        }
+    };
+
+    // Calendario aproximado de tareas
+    const buildTaskCalendar = (crop, daysSince) => {
+        const tasks = [];
+        const cycles = {
+            tomate: { riego: 2, fertilizar: 14, monitoreo: 7, cosecha: 90 },
+            papa: { riego: 3, fertilizar: 21, monitoreo: 7, cosecha: 120 },
+            lechuga: { riego: 1, fertilizar: 14, monitoreo: 5, cosecha: 60 },
+            default: { riego: 2, fertilizar: 14, monitoreo: 7, cosecha: 90 }
+        };
+        const c = cycles[crop.type] || cycles.default;
+        const plant = new Date(crop.plantingDate);
+
+        const nextDate = (everyDays) => {
+            const next = new Date();
+            const offset = everyDays - (daysSince % everyDays);
+            next.setDate(next.getDate() + offset);
+            return next;
+        };
+
+        tasks.push({ icon: 'droplet-fill', label: 'Próximo riego', date: nextDate(c.riego) });
+        tasks.push({ icon: 'flower1', label: 'Próxima fertilización', date: nextDate(c.fertilizar) });
+        tasks.push({ icon: 'bug', label: 'Próximo monitoreo de plagas', date: nextDate(c.monitoreo) });
+
+        const harvest = new Date(plant);
+        harvest.setDate(harvest.getDate() + c.cosecha);
+        tasks.push({ icon: 'basket-fill', label: 'Cosecha estimada', date: harvest });
+
+        return tasks;
+    };
+
     window.viewCropDetails = (id) => {
-        // TODO: Implementar vista detallada con recomendaciones
-        window.utils.showToast('Función en desarrollo', 'info');
+        const crops = window.utils.storage.get('userCrops') || [];
+        const crop = crops.find((c) => c.id === id);
+        if (!crop) {
+            window.utils.showToast('Cultivo no encontrado', 'warning');
+            return;
+        }
+
+        const days = window.utils.daysSince(crop.plantingDate);
+        const stage = getCropStage(days, crop.type);
+        const rec = STAGE_RECOMMENDATIONS[stage.class] || STAGE_RECOMMENDATIONS.growth;
+        const calendar = buildTaskCalendar(crop, days);
+
+        const body = document.getElementById('cropDetailsBody');
+        const title = document.getElementById('cropDetailsTitle');
+        title.innerHTML = `<i class="bi bi-tree-fill me-2"></i> ${crop.type.charAt(0).toUpperCase() + crop.type.slice(1)}${crop.variety ? ' - ' + crop.variety : ''}`;
+
+        body.innerHTML = `
+            <div class="mb-3 d-flex flex-wrap gap-2 align-items-center">
+                <span class="crop-status ${stage.class}">${stage.name}</span>
+                <span class="text-muted small">
+                    <i class="bi bi-calendar3 me-1"></i>${days} días desde la siembra
+                </span>
+            </div>
+
+            <div class="row g-3 mb-3 small">
+                <div class="col-sm-6"><i class="bi bi-rulers me-1"></i><strong>Área:</strong> ${crop.area} m²</div>
+                <div class="col-sm-6"><i class="bi bi-moisture me-1"></i><strong>Suelo:</strong> ${crop.soilType}</div>
+                <div class="col-sm-6"><i class="bi bi-droplet me-1"></i><strong>Riego:</strong> ${crop.irrigationType}</div>
+                <div class="col-sm-6"><i class="bi bi-calendar-event me-1"></i><strong>Siembra:</strong> ${window.utils.formatDate(crop.plantingDate)}</div>
+                ${crop.location ? `<div class="col-12"><i class="bi bi-geo-alt me-1"></i><strong>Ubicación:</strong> ${crop.location}</div>` : ''}
+            </div>
+
+            <h6 class="mt-4 mb-2"><i class="bi bi-lightbulb text-warning me-2"></i>Recomendaciones para la etapa de ${stage.name.toLowerCase()}</h6>
+            <ul class="mb-3">
+                <li><strong>Riego:</strong> ${rec.riego}</li>
+                <li><strong>Nutrición:</strong> ${rec.nutricion}</li>
+            </ul>
+
+            <h6 class="mt-3 mb-2"><i class="bi bi-check2-square text-success me-2"></i>Tareas de la etapa</h6>
+            <ul class="mb-3">
+                ${rec.tareas.map((t) => `<li>${t}</li>`).join('')}
+            </ul>
+
+            <h6 class="mt-3 mb-2"><i class="bi bi-calendar3 text-primary me-2"></i>Próximas tareas</h6>
+            <div class="list-group mb-3">
+                ${calendar.map((t) => `
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-${t.icon} me-2 text-primary"></i>${t.label}</span>
+                        <span class="badge bg-light text-dark">${window.utils.formatDateShort(t.date)}</span>
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <button class="btn btn-outline-primary btn-sm" onclick="(function(){bootstrap.Modal.getInstance(document.getElementById('cropDetailsModal')).hide(); editCrop('${crop.id}');})()">
+                    <i class="bi bi-pencil me-1"></i>Editar
+                </button>
+                <a href="/diagnosis" data-link class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-camera me-1"></i>Diagnosticar planta
+                </a>
+                <a href="/marketplace" data-link class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-shop me-1"></i>Ver productos
+                </a>
+            </div>
+        `;
+
+        const modal = new bootstrap.Modal(document.getElementById('cropDetailsModal'));
+        modal.show();
     };
 
     // Cargar cultivos al iniciar

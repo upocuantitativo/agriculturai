@@ -13,8 +13,14 @@ window.initChat = function() {
         const clearBtn = document.getElementById('clear-chat');
         const quickButtons = document.querySelectorAll('.quick-suggestion');
 
-        let conversationHistory = [];
+        let conversationHistory = window.utils.storage.get('chatHistory') || [];
         let intentsData = null;
+
+        const saveHistory = () => {
+            // Limitar a los últimos 50 mensajes para no inflar localStorage
+            const trimmed = conversationHistory.slice(-50);
+            window.utils.storage.set('chatHistory', trimmed);
+        };
 
         // Cargar intents desde JSON
         async function loadIntents() {
@@ -186,6 +192,7 @@ Por favor, hazme una pregunta más específica o usa nuestras herramientas espec
                 message: message,
                 timestamp: new Date().toISOString()
             });
+            saveHistory();
 
             // Limpiar input
             chatInput.value = '';
@@ -220,6 +227,7 @@ Por favor, hazme una pregunta más específica o usa nuestras herramientas espec
                     message: response,
                     timestamp: new Date().toISOString()
                 });
+                saveHistory();
 
                 console.log('Respuesta del bot:', response);
             } catch (error) {
@@ -251,10 +259,20 @@ Por favor, hazme una pregunta más específica o usa nuestras herramientas espec
             clearBtn.addEventListener('click', () => {
                 if (confirm('¿Deseas limpiar el historial del chat?')) {
                     conversationHistory = [];
+                    window.utils.storage.remove('chatHistory');
                     chatMessages.innerHTML = '';
                     showWelcomeMessage();
                 }
             });
+        }
+
+        // Restaurar mensajes previos
+        function restoreHistory() {
+            if (!conversationHistory.length) return false;
+            conversationHistory.forEach((msg) => {
+                addMessage(msg.message, msg.role === 'user');
+            });
+            return true;
         }
 
         // Mensaje de bienvenida
@@ -274,7 +292,10 @@ Puedo ayudarte con:
         // Inicializar
         async function init() {
             await loadIntents();
-            showWelcomeMessage();
+            const restored = restoreHistory();
+            if (!restored) {
+                showWelcomeMessage();
+            }
             chatInput.focus();
             console.log('=== initChat completado ===');
         }

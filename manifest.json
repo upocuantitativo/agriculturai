@@ -1,0 +1,42 @@
+{
+  "name": "AgriculturaI - Plataforma de IA para Agricultura",
+  "short_name": "AgriculturaI",
+  "description": "Diagnóstico de enfermedades, gestión de cultivos, chatbot agrícola y marketplace",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#28a745",
+  "lang": "es",
+  "categories": ["agriculture", "education", "productivity"],
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Diagnosticar planta",
+      "short_name": "Diagnóstico",
+      "description": "Analizar una planta por foto",
+      "url": "./?page=diagnosis",
+      "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Asistente agrícola",
+      "short_name": "Asistente",
+      "description": "Hablar con el chatbot",
+      "url": "./?page=chat",
+      "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}
