@@ -1,0 +1,15 @@
+/* Correcciones de legibilidad (impeccable detect), 2026-11-24. Solo color y tamaño de letra.
+   Para deshacerlas: quitar el <link> a este fichero en el HTML. */
+a.nav-link.active { color: #383838 !important; }
+div.card.bg-primary > div > a.btn.btn-outline-light { color: #21282f !important; }
+div.col-lg-7 > p.lead { color: #1e3718 !important; }
+div.col-md-4.mb-3 > p.text-light-emphasis { color: #869099 !important; }
+div.col.text-center > p.mb-0 { color: #869099 !important; }
+div.col.text-center > p.mb-0.small { color: #869099 !important; }
+div.d-flex.gap-3 > a.btn.btn-outline-light { color: #283037 !important; }
+div.mt-4 > a.btn.btn-primary { color: #262626 !important; }
+li > a.text-light-emphasis.text-decoration-none { color: #869099 !important; }
+li.nav-item > a.nav-link { color: #122c18 !important; }
+p.lead.mb-4 { color: #262626 !important; }
+p.text-light-emphasis { color: #869099 !important; }
+p.text-light-emphasis.small { color: #869099 !important; }
